@@ -1,3 +1,4 @@
 test/data/
 bin/data/
 test_output.log
+bin/*.yaml

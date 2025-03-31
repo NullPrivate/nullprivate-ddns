@@ -1,4 +1,4 @@
-# AdGuard Home DDNS Test Script
+# AdGuard Private DDNS Test Script
 # Tests functionality of the win\ddns.ps1 script
 
 # Global variables
@@ -10,9 +10,16 @@ $testIPv6 = "2001:db8::1"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootDir = Split-Path -Parent $scriptDir
 $scriptPath = Join-Path $rootDir "win\ddns.ps1"
-$adGuardHomePath = Join-Path $rootDir "bin\AdGuardHome.exe"
-$configPath = Join-Path $rootDir "bin\AdGuardHome.yaml"
+$adGuardPrivatePath = Join-Path $rootDir "bin\AdGuardPrivate.exe"
+$configPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml"
 $adGuardProcess = $null
+
+# Create test temp directory
+$testTempDir = Join-Path $scriptDir "temp"
+if (-not (Test-Path $testTempDir)) {
+    New-Item -Path $testTempDir -ItemType Directory -Force | Out-Null
+}
+
 $testConfig = @{
     base_url = "http://localhost:8081"
     username = "test"
@@ -24,10 +31,17 @@ $testConfig = @{
     DEBUG = 1
 }
 
-Function Start-AdGuardHome {
-    Write-Host "Checking if AdGuard Home is already running..." -ForegroundColor Cyan
+# Clean up any existing temp files
+Function Cleanup-TempFiles {
+    if (Test-Path $testTempDir) {
+        Get-ChildItem -Path $testTempDir -File | Remove-Item -Force
+    }
+}
+
+Function Start-AdGuardPrivate {
+    Write-Host "Checking if AdGuard Private is already running..." -ForegroundColor Cyan
     try {
-        # Check if AdGuard Home is already running
+        # Check if AdGuard Private is already running
         $maxRetries = 3
         $retryCount = 0
         $started = $false
@@ -47,49 +61,49 @@ Function Start-AdGuardHome {
                                           
                 if ($response.StatusCode -eq 200) {
                     $started = $true
-                    Write-Host "AdGuard Home is already running!" -ForegroundColor Green
+                    Write-Host "AdGuard Private is already running!" -ForegroundColor Green
                     return $true
                 }
             }
             catch {
                 $retryCount++
-                Write-Host "Trying to connect to existing AdGuard Home (attempt $retryCount of $maxRetries)..." -ForegroundColor Yellow
+                Write-Host "Trying to connect to existing AdGuard Private (attempt $retryCount of $maxRetries)..." -ForegroundColor Yellow
                 Start-Sleep -Seconds 2
             }
         }
         
-        # If AdGuard Home is not already running, start it
-        Write-Host "Starting AdGuard Home in the background..." -ForegroundColor Cyan
+        # If AdGuard Private is not already running, start it
+        Write-Host "Starting AdGuard Private in the background..." -ForegroundColor Cyan
         
-        Write-Host "AdGuard Home path: $adGuardHomePath" -ForegroundColor Yellow
+        Write-Host "AdGuard Private path: $adGuardPrivatePath" -ForegroundColor Yellow
         Write-Host "Config path: $configPath" -ForegroundColor Yellow
         
-        # Check if AdGuard Home exists
-        if (-not (Test-Path $adGuardHomePath)) {
-            Write-Host "AdGuard Home executable not found at: $adGuardHomePath" -ForegroundColor Red
-            throw "AdGuard Home executable not found"
+        # Check if AdGuard Private exists
+        if (-not (Test-Path $adGuardPrivatePath)) {
+            Write-Host "AdGuard Private executable not found at: $adGuardPrivatePath" -ForegroundColor Red
+            throw "AdGuard Private executable not found"
         }
         
-        Write-Host "Starting AdGuard Home with command:" -ForegroundColor Yellow
+        Write-Host "Starting AdGuard Private with command:" -ForegroundColor Yellow
         $arguments = "--web-addr 0.0.0.0:8081 --no-check-update --verbose"
-        Write-Host "$adGuardHomePath $arguments" -ForegroundColor Yellow
+        Write-Host "$adGuardPrivatePath $arguments" -ForegroundColor Yellow
         
-        # Start AdGuard Home process for the tests
-        $processInfo = Start-Process -FilePath $adGuardHomePath `
+        # Start AdGuard Private process for the tests
+        $processInfo = Start-Process -FilePath $adGuardPrivatePath `
                                   -ArgumentList $arguments `
                                   -PassThru -NoNewWindow
         $script:adGuardProcess = $processInfo
         
-        Write-Host "AdGuard Home process started with ID: $($processInfo.Id)" -ForegroundColor Yellow
+        Write-Host "AdGuard Private process started with ID: $($processInfo.Id)" -ForegroundColor Yellow
 
-        # Wait for AdGuard Home to start
-        Write-Host "Waiting for AdGuard Home to start up..." -ForegroundColor Yellow
+        # Wait for AdGuard Private to start
+        Write-Host "Waiting for AdGuard Private to start up..." -ForegroundColor Yellow
         Start-Sleep -Seconds 10
         
         # Check if the process is still running
         if ($processInfo.HasExited) {
-            Write-Host "AdGuard Home process has exited prematurely with code: $($processInfo.ExitCode)" -ForegroundColor Red
-            throw "AdGuard Home process exited prematurely"
+            Write-Host "AdGuard Private process has exited prematurely with code: $($processInfo.ExitCode)" -ForegroundColor Red
+            throw "AdGuard Private process exited prematurely"
         }
         
         # Check if the service is responding
@@ -105,44 +119,44 @@ Function Start-AdGuardHome {
                                           
                 if ($response.StatusCode -eq 200) {
                     $started = $true
-                    Write-Host "AdGuard Home started successfully!" -ForegroundColor Green
+                    Write-Host "AdGuard Private started successfully!" -ForegroundColor Green
                 }
             }
             catch {
                 $retryCount++
-                Write-Host "Waiting for AdGuard Home to be ready (attempt $retryCount of $maxRetries): $_" -ForegroundColor Yellow
+                Write-Host "Waiting for AdGuard Private to be ready (attempt $retryCount of $maxRetries): $_" -ForegroundColor Yellow
                 Start-Sleep -Seconds 5
             }
         }
         
         if (-not $started) {
-            throw "Failed to start AdGuard Home after $maxRetries attempts"
+            throw "Failed to start AdGuard Private after $maxRetries attempts"
         }
         
         return $true
     }
     catch {
-        Write-Host "Error starting AdGuard Home: $_" -ForegroundColor Red
+        Write-Host "Error starting AdGuard Private: $_" -ForegroundColor Red
         return $false
     }
 }
 
-Function Stop-AdGuardHome {
-    Write-Host "Stopping AdGuard Home..." -ForegroundColor Cyan
+Function Stop-AdGuardPrivate {
+    Write-Host "Stopping AdGuard Private..." -ForegroundColor Cyan
     if ($script:adGuardProcess -ne $null) {
         try {
             Stop-Process -Id $script:adGuardProcess.Id -Force
-            Write-Host "AdGuard Home stopped successfully" -ForegroundColor Green
+            Write-Host "AdGuard Private stopped successfully" -ForegroundColor Green
         }
         catch {
-            Write-Host "Error stopping AdGuard Home: $_" -ForegroundColor Red
+            Write-Host "Error stopping AdGuard Private: $_" -ForegroundColor Red
         }
     }
     
     # Restore the original configuration by copying the backup file
     try {
-        $configPath = Join-Path $rootDir "bin\AdGuardHome.yaml"
-        $backupPath = Join-Path $rootDir "bin\AdGuardHome.yaml.bak"
+        $configPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml"
+        $backupPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml.bak"
         
         if (Test-Path $backupPath) {
             Write-Host "Restoring original configuration from backup..." -ForegroundColor Cyan
@@ -172,9 +186,9 @@ Function Create-TempScript {
     $scriptContent = $scriptContent -replace '\$enable_ipv6 = \$true', "`$enable_ipv6 = `$$($Config.enable_ipv6)"
     $scriptContent = $scriptContent -replace '\$DEBUG = 1', "`$DEBUG = $($Config.DEBUG)"
     
-    # Create a temporary script file
-    $tempScriptPath = [System.IO.Path]::GetTempFileName() + ".ps1"
-    $scriptContent | Out-File -FilePath $tempScriptPath
+    # Create a temporary script file in the test temp directory
+    $tempScriptPath = Join-Path $testTempDir "ddns_test_script_$([Guid]::NewGuid().ToString()).ps1"
+    Set-Content -Path $tempScriptPath -Value $scriptContent
     
     return $tempScriptPath
 }
@@ -316,7 +330,7 @@ Function Test-CookieAuthentication {
     Write-Host "`nTEST: Cookie Authentication" -ForegroundColor Cyan
     Write-Host "------------------------" -ForegroundColor Cyan
     
-    # Get a session cookie from AdGuard Home
+    # Get a session cookie from AdGuard Private
     try {
         $loginBody = @{
             name = $testConfig.username
@@ -356,12 +370,15 @@ Function Test-CookieAuthentication {
 }
 
 Function Run-AllTests {
-    Write-Host "Starting AdGuard Home DDNS Script Tests" -ForegroundColor Cyan
+    Write-Host "Starting AdGuard Private DDNS Script Tests" -ForegroundColor Cyan
     Write-Host "=======================================" -ForegroundColor Cyan
     
-    # Start AdGuard Home
-    if (-not (Start-AdGuardHome)) {
-        Write-Host "Failed to start AdGuard Home. Tests aborted." -ForegroundColor Red
+    # Clean up any existing temp files
+    Cleanup-TempFiles
+    
+    # Start AdGuard Private
+    if (-not (Start-AdGuardPrivate)) {
+        Write-Host "Failed to start AdGuard Private. Tests aborted." -ForegroundColor Red
         return
     }
     
@@ -383,9 +400,7 @@ Function Run-AllTests {
         }
         
         # Clean up
-        if (Test-Path $tempScriptPath) {
-            Remove-Item $tempScriptPath -Force
-        }
+        Cleanup-TempFiles
         
         # Show test summary
         Write-Host "`nTest Summary:" -ForegroundColor Cyan
@@ -419,8 +434,11 @@ Function Run-AllTests {
         Write-Host "Error running tests: $_" -ForegroundColor Red
     }
     finally {
-        # Stop AdGuard Home
-        Stop-AdGuardHome
+        # Stop AdGuard Private
+        Stop-AdGuardPrivate
+        
+        # Final cleanup
+        Cleanup-TempFiles
     }
 }
 
