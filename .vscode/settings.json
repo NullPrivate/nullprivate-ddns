@@ -1,3 +1,94 @@
 {
-    "projectTranslator.currentVendor": "grok"
+    "projectTranslator.currentVendor": "grok",
+    "projectTranslator.vendors": [
+        {
+            "name": "grok",
+            "apiEndpoint": "https://api.x.ai/v1",
+            "apiKeyEnvVarName": "GROK_API_KEY",
+            "model": "grok-2",
+            "rpm": 20,
+            "maxTokensPerSegment": 1000,
+            "timeout": 30,
+            "temperature": 0.5,
+        }
+    ],
+    "projectTranslator.translationIntervalDays": 30,
+    "projectTranslator.specifiedFiles": [
+        {
+            "sourceFile": {
+                "path": "readme.md",
+                "lang": "en-us"
+            },
+            "destFiles": [
+                {
+                    "path": "readme.fr.md",
+                    "lang": "fr-fr"
+                },
+                {
+                    "path": "readme.pt.md",
+                    "lang": "pt-br"
+                },
+                {
+                    "path": "readme.it.md",
+                    "lang": "it-it"
+                },
+                {
+                    "path": "readme.pl.md",
+                    "lang": "pl-pl"
+                },
+                {
+                    "path": "readme.tr.md",
+                    "lang": "tr-tr"
+                },
+                {
+                    "path": "readme.es.md",
+                    "lang": "es-es"
+                },
+                {
+                    "path": "readme.de.md",
+                    "lang": "de-de"
+                },
+                {
+                    "path": "readme.ja.md",
+                    "lang": "ja-jp"
+                },
+                {
+                    "path": "readme.zh.md",
+                    "lang": "zh-cn"
+                },
+                {
+                    "path": "readme.ru.md",
+                    "lang": "ru-ru"
+                },
+                {
+                    "path": "readme.ar.md",
+                    "lang": "ar-sa"
+                },
+                {
+                    "path": "readme.ko.md",
+                    "lang": "ko-kr"
+                },
+                {
+                    "path": "readme.nl.md",
+                    "lang": "nl-nl"
+                },
+                {
+                    "path": "readme.da.md",
+                    "lang": "da-dk"
+                },
+                {
+                    "path": "readme.fi.md",
+                    "lang": "fi-fi"
+                },
+                {
+                    "path": "readme.no.md",
+                    "lang": "no-no"
+                },
+                {
+                    "path": "readme.sv.md",
+                    "lang": "sv-se"
+                }
+            ]
+        }
+    ]
 }
