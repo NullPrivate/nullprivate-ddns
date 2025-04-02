@@ -386,14 +386,14 @@ test_cookie_authentication() {
         curl -s -X POST -H "Content-Type: application/json" -H "$auth_header" \
             -d "{\"domain\":\"${TEST_CONFIG[domain]}\",\"answer\":\"*\"}" \
             "${TEST_CONFIG[base_url]}/control/rewrite/delete" >/dev/null 2>&1
-        
+
         # Wait for deletion to take effect
         sleep 2
-        
+
         # Run the script
-        
+
         bash "$temp_script_path"
-        
+
         # We mark the test as passed regardless of the script return value
         # since the cookie auth behavior is expected (AdGuard Private may reject cookies)
         echo -e "${GREEN}[PASS] Cookie authentication test completed${NC}"

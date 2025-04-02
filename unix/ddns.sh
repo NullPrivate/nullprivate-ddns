@@ -54,16 +54,6 @@ show_usage() {
     exit 1
 }
 
-# Debug mode switch (0=off, 1=on)
-DEBUG=0
-
-# Debug log function - kept for compatibility but not used
-debug_log() {
-    if [ $DEBUG -eq 1 ]; then
-        echo -e "${BLUE}[DEBUG] $1${NC}"
-    fi
-}
-
 # Print curl command function
 print_curl_cmd() {
     echo -e "${YELLOW}[CURL] $1${NC}"
@@ -112,7 +102,6 @@ get_current_ip() {
     fi
 
     for service in "${services[@]}"; do
-        print_curl_cmd "curl -s $curl_opts $service"
         current_ip=$(curl -s $curl_opts "$service")
 
         if [ "$ip_version" = "ipv4" ]; then
@@ -165,13 +154,13 @@ get_all_dns_records() {
 
     print_curl_cmd "curl $CURL_OPTS -H \"$auth_header\" ${base_url}/control/rewrite/list"
     response=$(curl $CURL_OPTS -H "$auth_header" ${base_url}/control/rewrite/list)
-    
+
     if [[ $response == *"401"* || $response == *"Unauthorized"* ]]; then
         echo -e "${RED}Error: Authentication failed. If using cookies, they may have expired.${NC}"
         echo -e "${RED}Please update your authentication information and try again.${NC}"
         exit 1
     fi
-    
+
     echo "$response"
 }
 
@@ -180,34 +169,34 @@ verify_dns_record() {
     local ip="$1"
     local ip_version="$2"
     local all_records="$3"
-    
+
     echo -e "${YELLOW}Examining all records for domain '${domain}' with IP '$ip'${NC}"
-    
+
     # Print debugging information about the record format
     echo -e "${YELLOW}Record response content:${NC}"
     echo "$all_records" | head -30
-    
+
     # Check if response is valid JSON or API response
     if [[ "$all_records" == *"\"result\""* ]]; then
         echo -e "${RED}API Response format detected instead of records. Response:${NC}"
         echo "$all_records"
     fi
-    
+
     # Extract records for the specific domain
     domain_records=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}")
     echo -e "${YELLOW}Domain records found: $(echo "$domain_records" | wc -l)${NC}"
     echo "$domain_records"
-    
+
     if [ "$ip_version" = "ipv4" ]; then
         # For IPv4, look for records with exact IPv4 format
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                       grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
+        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+            grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
     else
         # For IPv6, look for records with the IPv6 address
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                       grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
+        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+            grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
     fi
-    
+
     if [ -n "$record_exists" ]; then
         echo "true"
     else
@@ -234,7 +223,7 @@ get_current_record() {
         echo -e "${RED}Please update your authentication information and try again.${NC}"
         exit 1
     fi
-    
+
     # Check if this is a valid JSON response
     if [[ $response == "400 Bad Request" ]]; then
         echo ""
@@ -258,7 +247,7 @@ get_current_record() {
             echo ""
             return 1
         fi
-    else 
+    else
         # For direct record listing in older versions
         if [[ $response == *"\"domain\":\"${domain}\""* ]]; then
             # Filter records based on IP version
@@ -290,25 +279,25 @@ delete_existing_record() {
         -H "$auth_header" \
         -d "$record" \
         ${base_url}/control/rewrite/delete >/dev/null 2>&1
-    
+
     # Wait a moment for the changes to propagate
     sleep 1
-    
+
     # Check if the record was actually deleted by querying the list API
     local all_records=$(get_all_dns_records)
-    
+
     # Look for the record in the current list
     local record_exists=""
     if [[ "$record" == *"\"answer\":\"[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\""* ]]; then
         # IPv4 record
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                       grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
+        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+            grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
     else
         # IPv6 record
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                       grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
+        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+            grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
     fi
-    
+
     if [ -z "$record_exists" ]; then
         echo -e "${GREEN}Verified: DNS record was deleted successfully${NC}"
         return 0
@@ -332,33 +321,33 @@ create_new_record() {
         -H "$auth_header" \
         -d "{\"domain\": \"${domain}\", \"answer\": \"$new_ip\"}" \
         ${base_url}/control/rewrite/add >/dev/null 2>&1
-    
+
     echo -e "${GREEN}Created new DNS record: ${domain} -> $new_ip${NC}"
-    
+
     # Wait a moment for the changes to propagate
     sleep 1
-    
+
     # List all records to check if our record was set correctly
     local all_records=$(get_all_dns_records)
-    
+
     # Print the response from get_all_dns_records
     echo -e "${CYAN}All DNS records:${NC}"
     echo "$all_records"
-    
+
     echo -e "${CYAN}Checking if new record was created correctly...${NC}"
-    
+
     # Parse the records to find our new record
     if [[ "$all_records" == *"\"domain\":\"${domain}\""* ]]; then
         if [ "$ip_version" = "ipv4" ]; then
             # Look for IPv4 record matching our domain and IP
-            verify_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                           grep -o "{[^}]*\"answer\":\"$new_ip\"[^}]*}" | head -1)
+            verify_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                grep -o "{[^}]*\"answer\":\"$new_ip\"[^}]*}" | head -1)
         else
             # Look for IPv6 record matching our domain and IP
-            verify_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                           grep -o "{[^}]*\"answer\":\"$new_ip\"[^}]*}" | head -1)
+            verify_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                grep -o "{[^}]*\"answer\":\"$new_ip\"[^}]*}" | head -1)
         fi
-        
+
         if [ ! -z "$verify_record" ]; then
             echo -e "${GREEN}Verified: Record was created successfully: ${domain} -> $new_ip${NC}"
             return 0
@@ -387,11 +376,11 @@ update_dns_record() {
 
     # Get all DNS records
     all_records=$(get_all_dns_records)
-    
+
     # Print the response from get_all_dns_records
     echo -e "${CYAN}All DNS records:${NC}"
     echo "$all_records"
-    
+
     # Check if API returned an error
     if [[ "$all_records" == "400 Bad Request" || "$all_records" == *"\"error\""* ]]; then
         echo -e "${RED}Error: API returned error when fetching records${NC}"
@@ -399,33 +388,33 @@ update_dns_record() {
         create_new_record "$current_ip" "$ip_version"
         return $?
     fi
-    
+
     # Check if domain exists in records
     local domain_exists=false
     local existing_record=""
     local existing_ip=""
-    
+
     if [[ "$all_records" == *"\"domain\":\"${domain}\""* ]]; then
         domain_exists=true
-        
+
         # Search for the specific IP version record
         if [ "$ip_version" = "ipv4" ]; then
             # Find record with IPv4 answer (matches x.x.x.x format)
-            existing_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                             grep -o "{[^}]*\"answer\":\"[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\"[^}]*}" | head -1)
+            existing_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                grep -o "{[^}]*\"answer\":\"[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\"[^}]*}" | head -1)
         else
             # Find record with IPv6 answer (matches hex format with colons)
-            existing_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                             grep -o "{[^}]*\"answer\":\"[0-9a-fA-F:]\+\"[^}]*}" | 
-                             grep -v "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+" | head -1)
+            existing_record=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                grep -o "{[^}]*\"answer\":\"[0-9a-fA-F:]\+\"[^}]*}" |
+                grep -v "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+" | head -1)
         fi
-        
+
         if [ ! -z "$existing_record" ]; then
             # Extract the current IP from existing record
             existing_ip=$(echo "$existing_record" | grep -o '"answer":"[^"]*"' | cut -d'"' -f4)
-            
+
             echo -e "Found existing ${ip_version} record: ${domain} -> ${existing_ip}"
-            
+
             # Compare IPs
             if [ "$current_ip" = "$existing_ip" ]; then
                 echo -e "${GREEN}DNS record is up to date (${domain} -> $current_ip)${NC}"
@@ -436,38 +425,38 @@ update_dns_record() {
             echo -e "Updating ${YELLOW}$domain${NC} record from $existing_ip to $current_ip..."
             local auth_header=$(get_auth_header)
             local CURL_OPTS=$(get_curl_opts)
-            
+
             # Format the JSON correctly
             local update_json="{\"target\": $existing_record, \"update\": {\"domain\": \"${domain}\", \"answer\": \"$current_ip\"}}"
-            
+
             print_curl_cmd "curl $CURL_OPTS -X PUT -H \"Content-Type: application/json\" -H \"$auth_header\" -d '$update_json' ${base_url}/control/rewrite/update"
-            
+
             # Execute the curl command but ignore the response
             curl $CURL_OPTS -X PUT \
                 -H "Content-Type: application/json" \
                 -H "$auth_header" \
                 -d "$update_json" \
                 ${base_url}/control/rewrite/update >/dev/null 2>&1
-            
+
             # Wait a moment for the changes to propagate
             sleep 1
-            
+
             # List all records to check if our record was updated correctly
             local updated_records=$(get_all_dns_records)
-            
+
             echo -e "${CYAN}Checking if record was updated correctly...${NC}"
-            
+
             # Look for our specific record in the updated records
             if [ "$ip_version" = "ipv4" ]; then
                 # Look for IPv4 record matching our domain and new IP
-                verify_record=$(echo "$updated_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                               grep -o "{[^}]*\"answer\":\"$current_ip\"[^}]*}" | head -1)
+                verify_record=$(echo "$updated_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                    grep -o "{[^}]*\"answer\":\"$current_ip\"[^}]*}" | head -1)
             else
                 # Look for IPv6 record matching our domain and new IP
-                verify_record=$(echo "$updated_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" | 
-                               grep -o "{[^}]*\"answer\":\"$current_ip\"[^}]*}" | head -1)
+                verify_record=$(echo "$updated_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
+                    grep -o "{[^}]*\"answer\":\"$current_ip\"[^}]*}" | head -1)
             fi
-            
+
             if [ ! -z "$verify_record" ]; then
                 echo -e "${GREEN}Verified: Record was updated successfully: ${domain} -> $current_ip${NC}"
                 return 0
@@ -494,20 +483,20 @@ check_params() {
     local missing=0
 
     # Check base_url
-    if [ -z "$base_url" ] || [ "$base_url" = "{{server_name}}" ]; then
+    if [ -z "$base_url" ]; then
         echo -e "${RED}Error: Server URL (base_url) is required${NC}"
         missing=1
     fi
 
     # Check domain
-    if [ -z "$domain" ] || [ "$domain" = "{{domain}}" ]; then
+    if [ -z "$domain" ]; then
         echo -e "${RED}Error: Domain name (domain) is required${NC}"
         missing=1
     fi
 
     # Check authentication
-    if [ -z "$username" ] || [ "$username" = "{{username}}" ] || [ -z "$password" ] || [ "$password" = "{{password}}" ]; then
-        if [ -z "$cookies" ] || [ "$cookies" = "{{cookies}}" ]; then
+    if [ -z "$username" ] || [ -z "$password" ]; then
+        if [ -z "$cookies" ]; then
             echo -e "${RED}Error: Authentication is required (either username/password or cookies)${NC}"
             missing=1
         fi
@@ -522,8 +511,8 @@ check_params() {
 
 # Check authentication method
 check_auth() {
-    if [ -z "$username" ] || [ -z "$password" ] || [ "$username" = "{{username}}" ] || [ "$password" = "{{password}}" ]; then
-        if [ -z "$cookies" ] || [ "$cookies" = "{{cookies}}" ]; then
+    if [ -z "$username" ] || [ -z "$password" ]; then
+        if [ -z "$cookies" ]; then
             echo -e "${RED}Error: No authentication method available.${NC}"
             echo -e "${RED}Please provide either username/password or cookies.${NC}"
             show_usage
