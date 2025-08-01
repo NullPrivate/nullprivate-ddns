@@ -6,7 +6,56 @@
 
 ## 概述
 
-AdGuard 私人 DDNS 旨在提供一种简单的方法来快速设置私人动态 DNS (DDNS)，无需购买域名。此 DDNS 脚本专为 [adguardprivate.com](https://adguardprivate.com) 开发，通过利用 AdGuardPrivate 的基础功能，您可以无缝实现此功能。
+AdGuard 私人 DDNS 旨在提供一种简单的方法来快速设置私人动态 DNS (DDNS)，无需购买域名。
+此 DDNS 脚本专为 [adguardprivate.com](https://adguardprivate.com) 开发，通过利用 AdGuardPrivate 的基础功能，您可以无缝实现此功能。
+如果你已自部署了 AdGuardHome, 也可以使用此脚本来设置 AdGuardHome 的 DDNS。
+
+## 开始使用
+
+### AdguardPrivate
+
+![AdGuardPrivate](./assets/adguardprivate.webp)
+
+1. 已部署并运行 AdGuardPrivate
+2. 导航到**DNS 重写**, 下载 DDNS 脚本
+3. 运行脚本
+
+**Windows**
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns-script.ps1
+```
+
+**linux/macOS**
+
+```shell
+chmod +x ddns-script.sh
+./ddns-script.sh
+```
+
+### AdGuardHome
+
+![AdGuardHome](./assets/adguardhome.webp)
+
+1. 已部署并运行 AdGuardHome
+2. 从[release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)下载脚本
+3. 运行脚本
+
+**Windows**
+
+```powershell
+# 运行在本会话中运行脚本
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns.ps1 -BaseUrl <base_url> -Username <username> -Password <password> -Domain <domain>
+```
+
+**Linux**
+
+```shell
+chmod +x ddns.sh
+./ddns.sh -b <base_url> -u <username> -p <password> -d <domain>
+```
 
 ## 功能
 

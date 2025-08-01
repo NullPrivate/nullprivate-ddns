@@ -2,19 +2,30 @@
 # For Windows Systems (PowerShell)
 #
 
+param(
+    [string]$BaseUrl,
+    [string]$Username,
+    [string]$Password,
+    [string]$Domain,
+    [string]$Cookies,
+    [boolean]$EnableIPv4,
+    [boolean]$EnableIPv6,
+    [switch]$Help
+)
+
 # Configuration - modify before running
-$base_url = "{{server_name}}"  # Example: http://localhost:34020 or https://dns.example.com
-$username = "{{username}}"      # AdGuard Private username
-$password = "{{password}}"      # AdGuard Private password
-$domain = "{{domain}}"          # Domain to update, e.g.: nas.example.com
-$cookies = "{{cookies}}"        # Cookie string for authentication, e.g.: "agh_session=abc123"
+$base_url = if ($PSBoundParameters.ContainsKey('BaseUrl')) { $BaseUrl } else { "{{server_name}}" }  # Example: http://localhost:34020 or https://dns.example.com
+$username = if ($PSBoundParameters.ContainsKey('Username')) { $Username } else { "{{username}}" }     # AdGuard Private username
+$password = if ($PSBoundParameters.ContainsKey('Password')) { $Password } else { "{{password}}" }     # AdGuard Private password
+$domain = if ($PSBoundParameters.ContainsKey('Domain')) { $Domain } else { "{{domain}}" }             # Domain to update, e.g.: nas.example.com
+$cookies = if ($PSBoundParameters.ContainsKey('Cookies')) { $Cookies } else { "{{cookies}}" }         # Cookie string for authentication, e.g.: "agh_session=abc123"
 
 # IP version configuration
-$enable_ipv4 = $true           # Enable IPv4 DDNS updates
-$enable_ipv6 = $true           # Enable IPv6 DDNS updates
+$enable_ipv4 = if ($PSBoundParameters.ContainsKey('EnableIPv4')) { $EnableIPv4 } else { $true }       # Enable IPv4 DDNS updates
+$enable_ipv6 = if ($PSBoundParameters.ContainsKey('EnableIPv6')) { $EnableIPv6 } else { $true }       # Enable IPv6 DDNS updates
 
 # Debug mode switch (0=off, 1=on)
-$DEBUG = 1
+$DEBUG = 0
 
 # Script temporary files
 $TEMP_FILE_IPV4 = "$env:TEMP\adguard_ddns_ipv4.tmp"
@@ -23,29 +34,38 @@ $TEMP_FILE_IPV6 = "$env:TEMP\adguard_ddns_ipv6.tmp"
 # Display usage information
 function Show-Usage {
     Write-Host "Usage:" -ForegroundColor Blue
-    Write-Host "  Edit the script and set the following parameters before running:"
-    Write-Host "  base_url  - AdGuard Private server URL (e.g., https://{xxxxxxxxxxxxxxxx}.adguardprivate.com)" -ForegroundColor Yellow
-    Write-Host "  domain    - Domain to update (e.g., nas.example.com)" -ForegroundColor Yellow
+    Write-Host "  Edit the script and set the following parameters before running or pass as arguments:"
+    Write-Host "  -BaseUrl  - AdGuard Private server URL (e.g., https://{xxxxxxxxxxxxxxxx}.adguardprivate.com)" -ForegroundColor Yellow
+    Write-Host "  -Domain   - Domain to update (e.g., nas.example.com)" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "  For authentication, use one of the following methods:"
-    Write-Host "  1. Username/Password (recommended):"
-    Write-Host "     username - AdGuard Private username" -ForegroundColor Yellow
-    Write-Host "     password - AdGuard Private password" -ForegroundColor Yellow
+    Write-Host "  For authentication, use one of the following methods:" -ForegroundColor White
+    Write-Host "  1. Username/Password (recommended):" -ForegroundColor White
+    Write-Host "     -Username - AdGuard Private username" -ForegroundColor Yellow
+    Write-Host "     -Password - AdGuard Private password" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "  2. Cookies (alternative, may expire):"
-    Write-Host "     cookies  - Cookie string (e.g., 'agh_session=abc123')" -ForegroundColor Yellow
+    Write-Host "  2. Cookies (alternative, may expire):" -ForegroundColor White
+    Write-Host "     -Cookies  - Cookie string (e.g., 'agh_session=abc123')" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "  Example configuration:"
-    Write-Host "    `$base_url = 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com'"
-    Write-Host "    `$username = 'admin'"
-    Write-Host "    `$password = 'password123'"
-    Write-Host "    `$domain = 'nas.example.com'"
+    Write-Host "  Optional parameters:" -ForegroundColor White
+    Write-Host "  -EnableIPv4 - Enable/disable IPv4 DDNS updates (true/false)" -ForegroundColor Yellow
+    Write-Host "  -EnableIPv6 - Enable/disable IPv6 DDNS updates (true/false)" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "    # OR using cookies instead of username/password:"
-    Write-Host "    `$cookies = 'agh_session=abc123'"
+    Write-Host "  Example usage:" -ForegroundColor White
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com'"
+    Write-Host ""
+    Write-Host "    # OR using cookies instead of username/password:" -ForegroundColor White
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Cookies 'agh_session=abc123' -Domain 'nas.example.com'"
+    Write-Host ""
+    Write-Host "    # OR disabling IPv6 updates:" -ForegroundColor White
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com' -EnableIPv6 `$false"
     Write-Host ""
     Write-Host "Note: This script is specifically developed for adguardprivate.com" -ForegroundColor Blue
     exit
+}
+
+# Check if help is requested
+if ($Help) {
+    Show-Usage
 }
 
 # Check if all essential parameters are provided
@@ -55,6 +75,11 @@ function Check-Params {
     # Check base_url
     if ([string]::IsNullOrEmpty($base_url) -or $base_url -eq "{{server_name}}") {
         Write-Host "Error: Server URL (base_url) is required" -ForegroundColor Red
+        $missing = $true
+    }
+    # Ensure base_url includes protocol
+    elseif (-not ($base_url.StartsWith("http://") -or $base_url.StartsWith("https://"))) {
+        Write-Host "Error: Server URL must start with 'http://' or 'https://'" -ForegroundColor Red
         $missing = $true
     }
 
@@ -155,10 +180,21 @@ function Get-AuthorizationHeader {
         $headers = @{
             "Authorization" = "Basic $base64"
         }
+        
+        if ($DEBUG -eq 1) {
+            Write-Host "DEBUG: Using Basic Authentication"
+            Write-Host "DEBUG: Username: $username"
+            # Do not print password for security
+        }
     }
     elseif ($cookies) {
         $headers = @{
             "Cookie" = $cookies
+        }
+        
+        if ($DEBUG -eq 1) {
+            Write-Host "DEBUG: Using Cookie Authentication"
+            Write-Host "DEBUG: Cookies: $cookies"
         }
     }
     else {
@@ -178,6 +214,10 @@ function Get-CurrentRecord {
     try {
         $response = Invoke-RestMethod -Uri "$base_url/control/rewrite/list" -Headers $headers -Method Get
         
+        if ($DEBUG -eq 1) {
+            Write-Host "DEBUG: Records response: $($response | ConvertTo-Json -Depth 10)"
+        }
+        
         foreach ($record in $response) {
             if ($record.domain -eq $domain) {
                 if ($IPVersion -eq "ipv4" -and $record.answer -match "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$") {
@@ -191,6 +231,9 @@ function Get-CurrentRecord {
     }
     catch {
         Write-ColorOutput "Failed to get DNS record: $_" "Red"
+        if ($DEBUG -eq 1) {
+            Write-Host "DEBUG: Error details: $($_.Exception.Message)"
+        }
     }
     
     return $null
@@ -290,11 +333,24 @@ function Update-DNSRecord {
             $headers[$key] = $baseHeaders[$key]
         }
         
-        # 修改现有记录的内容
-        $existing_record.answer = $current_ip
-        $body = $existing_record | ConvertTo-Json -Compress
+        # Create the correct request body format for updating DNS record
+        # Based on the test script, the format should be:
+        # {"target": {original_record}, "update": {modified_record}}
+        $updateRecord = $existing_record | ConvertTo-Json -Depth 10 | ConvertFrom-Json
+        $updateRecord.answer = $current_ip
+        
+        $body = @{
+            target = $existing_record
+            update = $updateRecord
+        } | ConvertTo-Json -Compress
         
         try {
+            if ($DEBUG -eq 1) {
+                Write-Host "DEBUG: Sending update request to $base_url/control/rewrite/update"
+                Write-Host "DEBUG: Headers: $($headers | ConvertTo-Json -Compress)"
+                Write-Host "DEBUG: Body: $body"
+            }
+            
             $response = Invoke-RestMethod -Uri "$base_url/control/rewrite/update" -Headers $headers -Method Put -Body $body
             Write-ColorOutput "$IPVersion DNS record updated successfully" "Green"
             # Save current IP for next comparison
@@ -302,6 +358,10 @@ function Update-DNSRecord {
         }
         catch {
             Write-ColorOutput "Failed to update $IPVersion DNS record" "Red"
+            if ($DEBUG -eq 1) {
+                Write-Host "DEBUG: Error details: $($_.Exception.Message)"
+                Write-Host "DEBUG: Error details: $($_ | Out-String)"
+            }
         }
     }
     else {

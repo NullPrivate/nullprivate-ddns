@@ -1,25 +1,12 @@
 {
-    "projectTranslator.currentVendor": "grok",
-    "projectTranslator.vendors": [
-        {
-            "name": "grok",
-            "apiEndpoint": "https://api.x.ai/v1",
-            "apiKeyEnvVarName": "GROK_API_KEY",
-            "model": "grok-2",
-            "rpm": 20,
-            "maxTokensPerSegment": 1000,
-            "timeout": 30,
-            "temperature": 0.5,
-        }
-    ],
-    "projectTranslator.translationIntervalDays": 30,
+    "projectTranslator.translationIntervalDays": -1,
     "projectTranslator.specifiedFiles": [
         {
             "sourceFile": {
-                "path": "readme.md",
-                "lang": "en-us"
+                "path": "readme.zh.md",
+                "lang": "zh-cn"
             },
-            "destFiles": [
+            "targetFiles": [
                 {
                     "path": "readme.fr.md",
                     "lang": "fr-fr"
@@ -53,8 +40,8 @@
                     "lang": "ja-jp"
                 },
                 {
-                    "path": "readme.zh.md",
-                    "lang": "zh-cn"
+                    "path": "readme.md",
+                    "lang": "en-us"
                 },
                 {
                     "path": "readme.ru.md",

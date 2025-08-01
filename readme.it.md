@@ -1,34 +1,83 @@
-# AdGuard Private DDNS
+# AdGuard DDNS Privato
 
-[Documentazione in cinese](readme.zh-cn.md)
+[English](readme.md) | [Français](readme.fr.md) | [Português](readme.pt.md) | [Italiano](readme.it.md) | [Polski](readme.pl.md) | [Türkçe](readme.tr.md) | [Español](readme.es.md) | [Deutsch](readme.de.md) | [日本語](readme.ja.md) | [中文](readme.zh.md) | [Русский](readme.ru.md) | [العربية](readme.ar.md) | [한국어](readme.ko.md) | [Nederlands](readme.nl.md) | [Dansk](readme.da.md) | [Suomi](readme.fi.md) | [Norsk](readme.no.md) | [Svenska](readme.sv.md)
 
-Questo progetto è contribuito da [@jqknono](https://github.com/jqknono).
+Questo progetto è stato contribuito da [@jqknono](https://github.com/jqknono).
 
 ## Panoramica
 
-AdGuard Private DDNS mira a fornire un modo semplice per configurare rapidamente un DNS dinamico privato (DDNS) senza la necessità di acquistare un nome di dominio. Questo script DDNS è sviluppato specificamente per [adguardprivate.com](https://adguardprivate.com) e, sfruttando la funzionalità di base di AdGuardPrivate, è possibile ottenere questo risultato senza problemi.
+AdGuard DDNS Privato mira a fornire un metodo semplice per configurare rapidamente un DNS Dinamico (DDNS) privato senza dover acquistare un dominio.
+Questo script DDNS è sviluppato specificamente per [adguardprivate.com](https://adguardprivate.com), sfruttando le funzionalità di base di AdGuardPrivate per offrire questa funzionalità in modo fluido.
+Se hai già installato AdGuardHome autonomamente, puoi utilizzare questo script per configurare il DDNS di AdGuardHome.
+
+## Come Iniziare
+
+### AdGuardPrivate
+
+![AdGuardPrivate](./assets/adguardprivate.webp)
+
+1. Assicurati che AdGuardPrivate sia installato e in esecuzione
+2. Vai alla sezione **Riscrittura DNS**, scarica lo script DDNS
+3. Esegui lo script
+
+**Windows**
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns-script.ps1
+```
+
+**Linux/macOS**
+
+```shell
+chmod +x ddns-script.sh
+./ddns-script.sh
+```
+
+### AdGuardHome
+
+![AdGuardHome](./assets/adguardhome.webp)
+
+1. Assicurati che AdGuardHome sia installato e in esecuzione
+2. Scarica lo script da [release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)
+3. Esegui lo script
+
+**Windows**
+
+```powershell
+# Esegui lo script nella sessione corrente
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns.ps1 -BaseUrl <base_url> -Username <username> -Password <password> -Domain <domain>
+```
+
+**Linux**
+
+```shell
+chmod +x ddns.sh
+./ddns.sh -b <base_url> -u <username> -p <password> -d <domain>
+```
 
 ## Funzionalità
 
 - Configurazione rapida e semplice.
-- Utilizza AdGuardPrivate per la funzionalità DDNS.
-- Supporta sia sistemi Windows che basati su Unix.
-- Opzioni di autenticazione multiple: cookie (più sicuri ma possono scadere) o nome utente/password (più persistenti ma meno sicuri).
-- **Supporto AdGuardHome**: Completamente compatibile con AdGuardHome, sfruttando la sua funzionalità per una configurazione DDNS senza problemi.
+- Sfrutta AdGuardPrivate per la funzionalità DDNS.
+- Supporto per Windows e sistemi basati su Unix.
+- Multiple opzioni di autenticazione: cookie (più sicuri ma potenzialmente scadenti) o nome utente/password (più duraturi ma meno sicuri).
+- **Supporto AdGuardHome**: completamente compatibile con AdGuardHome, sfruttando le sue funzionalità per una configurazione DDNS senza interruzioni.
 
-## Differenza rispetto al DDNS tradizionale
+## Differenze rispetto al DDNS Tradizionale
 
-A differenza del DDNS tradizionale, questo DDNS privato ha i seguenti vantaggi:
+A differenza del DDNS tradizionale, questo DDNS privato offre i seguenti vantaggi:
 
-- **Nessun Tempo di Cache**: Le modifiche hanno effetto immediato senza dover attendere la scadenza della cache DNS.
-- **Nessuna Propagazione DNS**: Gli aggiornamenti sono immediatamente disponibili senza la necessità di ritardi nella propagazione DNS.
-- **Nessun Acquisto di Dominio Richiesto**: È possibile utilizzare pseudo-domini per l'accesso, eliminando la necessità di acquistare un nome di dominio.
-- **Protezione della Privacy**: Solo gli utenti connessi al servizio DNS privato possono risolvere il DNS, garantendo la privacy.
+- **Nessun tempo di cache**: le modifiche hanno effetto immediato, senza attendere la scadenza della cache DNS.
+- **Nessuna propagazione DNS**: gli aggiornamenti sono disponibili immediatamente, senza ritardi di propagazione DNS.
+- **Nessun acquisto di dominio necessario**: puoi utilizzare un dominio fittizio per l'accesso, eliminando la necessità di acquistare un dominio.
+- **Protezione della privacy**: solo gli utenti connessi al servizio DNS privato possono risolvere il DNS, garantendo la privacy.
 
-## Inizio
+## Guida Introduttiva
 
-1. Assicurati di avere AdGuardPrivate o AdGuardHome installato e in esecuzione.
-2. Segui le istruzioni fornite nei script `win/ddns.ps1` (per Windows) o `unix/ddns.sh` (per sistemi basati su Unix) per configurare il tuo DDNS privato.
+1. Assicurati che AdGuardPrivate o AdGuardHome siano installati e in esecuzione.
+2. Segui le istruzioni fornite negli script `win/ddns.ps1` (per Windows) o `unix/ddns.sh` (per sistemi basati su Unix) per configurare il tuo DDNS privato.
 
 ## Licenza
 

@@ -1,35 +1,84 @@
-# AdGuard الخاص DDNS
+# AdGuard DDNS الخاص
 
-[الإنجليزية](readme.md) | [الفرنسية](readme.fr.md) | [البرتغالية](readme.pt.md) | [الإيطالية](readme.it.md) | [البولندية](readme.pl.md) | [التركية](readme.tr.md) | [الإسبانية](readme.es.md) | [الألمانية](readme.de.md) | [اليابانية](readme.ja.md) | [الصينية](readme.zh.md) | [الروسية](readme.ru.md) | [العربية](readme.ar.md) | [الكورية](readme.ko.md) | [الهولندية](readme.nl.md) | [الدنماركية](readme.da.md) | [الفنلندية](readme.fi.md) | [النرويجية](readme.no.md) | [السويدية](readme.sv.md)
+[English](readme.md) | [Français](readme.fr.md) | [Português](readme.pt.md) | [Italiano](readme.it.md) | [Polski](readme.pl.md) | [Türkçe](readme.tr.md) | [Español](readme.es.md) | [Deutsch](readme.de.md) | [日本語](readme.ja.md) | [中文](readme.zh.md) | [Русский](readme.ru.md) | [العربية](readme.ar.md) | [한국어](readme.ko.md) | [Nederlands](readme.nl.md) | [Dansk](readme.da.md) | [Suomi](readme.fi.md) | [Norsk](readme.no.md) | [Svenska](readme.sv.md)
 
-هذا المشروع يساهم فيه [@jqknono](https://github.com/jqknono).
+هذا المشروع مساهم من [@jqknono](https://github.com/jqknono).
 
 ## نظرة عامة
 
-يهدف AdGuard الخاص DDNS إلى توفير طريقة سهلة لإعداد خدمة Dynamic DNS (DDNS) الخاصة بسرعة دون الحاجة إلى شراء اسم نطاق. تم تطوير هذا النص لـ [adguardprivate.com](https://adguardprivate.com) وباستخدام وظائف الأساسية لـ AdGuardPrivate، يمكنك تحقيق ذلك بسلاسة.
-
-## الميزات
-
-- إعداد سريع وسهل.
-- يستخدم AdGuardPrivate لوظائف DDNS.
-- يدعم أنظمة Windows وأنظمة مبنية على Unix.
-- خيارات متعددة للمصادقة: ملفات تعريف الارتباط (أكثر أمانًا ولكن قد تنتهي صلاحيتها) أو اسم المستخدم/كلمة المرور (أكثر استمرارية ولكن أقل أمانًا).
-- **دعم AdGuardHome**: متوافق تمامًا مع AdGuardHome، مما يستفيد من وظائفه لإعداد DDNS بسلاسة.
-
-## الفرق عن DDNS التقليدي
-
-على عكس DDNS التقليدي، يتمتع هذا الـ DDNS الخاص بالمزايا التالية:
-
-- **لا وقت تخزين مؤقت**: تصبح التغييرات سارية المفعول على الفور دون الانتظار لانتهاء صلاحية تخزين الـ DNS المؤقت.
-- **لا توزيع DNS**: التحديثات متاحة على الفور دون الحاجة إلى تأخيرات توزيع DNS.
-- **لا حاجة لشراء نطاق**: يمكنك استخدام نطاقات وهمية للوصول، مما يلغي الحاجة إلى شراء اسم نطاق.
-- **حماية الخصوصية**: يمكن للمستخدمين المتصلين فقط بخدمة DNS الخاصة حل الـ DNS، مما يضمن الخصوصية.
+يهدف AdGuard DDNS الخاص إلى توفير طريقة بسيطة لإعداد DNS الديناميكي الخاص (DDNS) بسرعة دون الحاجة إلى شراء نطاق.
+تم تطوير هذا النص خصيصًا لـ [adguardprivate.com](https://adguardprivate.com)، حيث يمكنك تحقيق هذه الوظيفة بسلاسة من خلال الاستفادة من الوظائف الأساسية لـ AdGuardPrivate.
+إذا كنت قد قمت بنشر AdGuardHome بنفسك، فيمكنك أيضًا استخدام هذا النص لإعداد DDNS لـ AdGuardHome.
 
 ## البدء
 
+### AdGuardPrivate
+
+![AdGuardPrivate](./assets/adguardprivate.webp)
+
+1. تأكد من نشر وتشغيل AdGuardPrivate
+2. انتقل إلى **إعادة كتابة DNS**، وقم بتنزيل نص DDNS
+3. تشغيل النص
+
+**ويندوز**
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns-script.ps1
+```
+
+**لينكس/ماك**
+
+```shell
+chmod +x ddns-script.sh
+./ddns-script.sh
+```
+
+### AdGuardHome
+
+![AdGuardHome](./assets/adguardhome.webp)
+
+1. تأكد من نشر وتشغيل AdGuardHome
+2. قم بتنزيل النص من [الإصدارات](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)
+3. تشغيل النص
+
+**ويندوز**
+
+```powershell
+# تشغيل النص في الجلسة الحالية
+Set-ExecutionPolicy Bypass -Scope Process
+.\ddns.ps1 -BaseUrl <base_url> -Username <username> -Password <password> -Domain <domain>
+```
+
+**لينكس**
+
+```shell
+chmod +x ddns.sh
+./ddns.sh -b <base_url> -u <username> -p <password> -d <domain>
+```
+
+## الميزات
+
+- سريع وسهل الإعداد.
+- يستخدم AdGuardPrivate لتحقيق وظيفة DDNS.
+- يدعم أنظمة ويندوز وأنظمة يونكس.
+- خيارات متعددة للمصادقة: ملفات تعريف الارتباط (أكثر أمانًا ولكن قد تنتهي صلاحيتها) أو اسم المستخدم/كلمة المرور (أكثر ديمومة ولكن أقل أمانًا).
+- **دعم AdGuardHome**: متوافق بالكامل مع AdGuardHome، ويستخدم وظائفه لإعداد DDNS بسلاسة.
+
+## الفرق مع DDNS التقليدي
+
+يتميز هذا DDNS الخاص بالمزايا التالية مقارنة بـ DDNS التقليدي:
+
+- **لا يوجد وقت تخزين مؤقت**: التغييرات سارية المفعول على الفور دون انتظار انتهاء صلاحية التخزين المؤقت لـ DNS.
+- **لا يوجد انتشار DNS**: التحديثات متاحة على الفور دون تأخير انتشار DNS.
+- **لا حاجة لشراء نطاق**: يمكنك استخدام نطاق وهمي للوصول، مما يلغي الحاجة إلى شراء نطاق.
+- **حماية الخصوصية**: فقط المستخدمون المتصلون بخدمة DNS الخاصة يمكنهم حل DNS، مما يضمن الخصوصية.
+
+## دليل البدء
+
 1. تأكد من تثبيت وتشغيل AdGuardPrivate أو AdGuardHome.
-2. اتبع التعليمات الموجودة في النصوص `win/ddns.ps1` (لنظام Windows) أو `unix/ddns.sh` (لأنظمة مبنية على Unix) لتكوين DDNS الخاص بك.
+2. اتبع التعليمات المقدمة في النص `win/ddns.ps1` (لـ Windows) أو `unix/ddns.sh` (لأنظمة يونكس) لتكوين DDNS الخاص بك.
 
 ## الترخيص
 
-يتم ترخيص هذا المشروع بموجب شروط [الترخيص](LICENSE) المضمنة في المستودع.
+هذا المشروع مرخص بموجب شروط [الترخيص](LICENSE) المضمن في المستودع.

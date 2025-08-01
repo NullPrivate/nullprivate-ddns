@@ -9,49 +9,91 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Configuration - modify before running
-base_url="{{server_name}}" # Example: http://localhost:34020 or https://dns.example.com
-username="{{username}}"    # AdGuard Private username
-password="{{password}}"    # AdGuard Private password
-domain="{{domain}}"        # Domain to update, e.g.: nas.example.com
-cookies="{{cookies}}"      # Cookie string for authentication, e.g.: "agh_session=abc123"
-
-# DDNS Configuration
-enable_ipv4="true" # Enable IPv4 DDNS updates
-enable_ipv6="true" # Enable IPv6 DDNS updates
-
-# WARNING: Cookies may expire over time, which could cause authentication failures.
-# It is recommended to use username/password authentication whenever possible.
-# Only use cookies if username/password authentication is not available.
+# Default configuration values
+base_url=""
+username=""
+password=""
+domain=""
+cookies=""
+enable_ipv4="true"
+enable_ipv6="true"
+DEBUG=0
 
 # Display usage information
 show_usage() {
     echo -e "${BLUE}Usage:${NC}"
-    echo -e "  Edit the script and set the following parameters before running:"
-    echo -e "  ${YELLOW}base_url${NC}  - AdGuard Private server URL (e.g., https://{xxxxxxxxxxxxxxxx}.adguardprivate.com)"
-    echo -e "  ${YELLOW}domain${NC}    - Domain to update (e.g., nas.example.com)"
+    echo -e "  Run the script with the following command line options:"
+    echo -e "  ${YELLOW}-b, --base-url${NC}     AdGuard Private server URL (e.g., https://public3.adguardprivate.com)"
+    echo -e "  ${YELLOW}-u, --username${NC}    AdGuard Private username"
+    echo -e "  ${YELLOW}-p, --password${NC}    AdGuard Private password"
+    echo -e "  ${YELLOW}-d, --domain${NC}      Domain to update (e.g., nas.example.com)"
+    echo -e "  ${YELLOW}-c, --cookies${NC}     Cookie string for authentication (e.g., \"agh_session=abc123\")"
+    echo -e "  ${YELLOW}-4, --ipv4${NC}        Enable/disable IPv4 DDNS updates (true/false)"
+    echo -e "  ${YELLOW}-6, --ipv6${NC}        Enable/disable IPv6 DDNS updates (true/false)"
+    echo -e "  ${YELLOW}-D, --debug${NC}       Enable debug mode"
+    echo -e "  ${YELLOW}-h, --help${NC}        Show this help message"
     echo -e ""
-    echo -e "  For authentication, use one of the following methods:"
-    echo -e "  1. Username/Password (recommended):"
-    echo -e "     ${YELLOW}username${NC} - AdGuard Private username"
-    echo -e "     ${YELLOW}password${NC} - AdGuard Private password"
-    echo -e ""
-    echo -e "  2. Cookies (alternative, may expire):"
-    echo -e "     ${YELLOW}cookies${NC}  - Cookie string (e.g., \"agh_session=abc123\")"
-    echo -e ""
-    echo -e "  Example configuration:"
-    echo -e "    base_url=\"https://{xxxxxxxxxxxxxxxx}.adguardprivate.com\""
-    echo -e "    username=\"admin\""
-    echo -e "    password=\"password123\""
-    echo -e "    domain=\"nas.example.com\""
+    echo -e "  Example usage:"
+    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -u jqknono -p 123456li -d nas.home"
     echo -e ""
     echo -e "    # OR using cookies instead of username/password:"
-    echo -e "    cookies=\"agh_session=abc123\""
+    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -c \"agh_session=abc123\" -d nas.home"
+    echo -e ""
+    echo -e "    # OR disabling IPv6 updates:"
+    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -u jqknono -p 123456li -d nas.home --ipv6 false"
     echo -e ""
     echo -e "${BLUE}Note:${NC} This script is specifically developed for adguardprivate.com"
     exit 1
+}
+
+# Parse command line arguments
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -b|--base-url)
+                base_url="$2"
+                shift 2
+                ;;
+            -u|--username)
+                username="$2"
+                shift 2
+                ;;
+            -p|--password)
+                password="$2"
+                shift 2
+                ;;
+            -d|--domain)
+                domain="$2"
+                shift 2
+                ;;
+            -c|--cookies)
+                cookies="$2"
+                shift 2
+                ;;
+            -4|--ipv4)
+                enable_ipv4="$2"
+                shift 2
+                ;;
+            -6|--ipv6)
+                enable_ipv6="$2"
+                shift 2
+                ;;
+            -D|--debug)
+                DEBUG=1
+                shift
+                ;;
+            -h|--help)
+                show_usage
+                ;;
+            *)
+                echo -e "${RED}Unknown option: $1${NC}"
+                show_usage
+                ;;
+        esac
+    done
 }
 
 # Print curl command function
@@ -90,6 +132,7 @@ get_current_ip() {
             "https://ifconfig.me/ip"
             "https://icanhazip.com"
             "https://ipinfo.io/ip"
+            "https://4.ipw.cn"
         )
     else
         curl_opts="-6"
@@ -98,6 +141,7 @@ get_current_ip() {
             "https://ifconfig.co"
             "https://icanhazip.com"
             "https://api6.my-ip.io/ip"
+            "https://6.ipw.cn"
         )
     fi
 
@@ -152,6 +196,16 @@ get_all_dns_records() {
         exit 1
     fi
 
+    # Ensure base_url includes protocol
+    if [[ ! "$base_url" =~ ^https?:// ]]; then
+        base_url="https://$base_url"
+    fi
+
+    if [ $DEBUG -eq 1 ]; then
+        echo "DEBUG: Using authentication method: $(if [ -n "$username" ] && [ -n "$password" ]; then echo "Basic Auth"; else echo "Cookies"; fi)"
+        echo "DEBUG: Base URL: $base_url"
+    fi
+
     print_curl_cmd "curl $CURL_OPTS -H \"$auth_header\" ${base_url}/control/rewrite/list"
     response=$(curl $CURL_OPTS -H "$auth_header" ${base_url}/control/rewrite/list)
 
@@ -164,46 +218,6 @@ get_all_dns_records() {
     echo "$response"
 }
 
-# Verify if a specific record exists with expected values
-verify_dns_record() {
-    local ip="$1"
-    local ip_version="$2"
-    local all_records="$3"
-
-    echo -e "${YELLOW}Examining all records for domain '${domain}' with IP '$ip'${NC}"
-
-    # Print debugging information about the record format
-    echo -e "${YELLOW}Record response content:${NC}"
-    echo "$all_records" | head -30
-
-    # Check if response is valid JSON or API response
-    if [[ "$all_records" == *"\"result\""* ]]; then
-        echo -e "${RED}API Response format detected instead of records. Response:${NC}"
-        echo "$all_records"
-    fi
-
-    # Extract records for the specific domain
-    domain_records=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}")
-    echo -e "${YELLOW}Domain records found: $(echo "$domain_records" | wc -l)${NC}"
-    echo "$domain_records"
-
-    if [ "$ip_version" = "ipv4" ]; then
-        # For IPv4, look for records with exact IPv4 format
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
-            grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
-    else
-        # For IPv6, look for records with the IPv6 address
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
-            grep -o "{[^}]*\"answer\":\"$ip\"[^}]*}" | head -1)
-    fi
-
-    if [ -n "$record_exists" ]; then
-        echo "true"
-    else
-        echo "false"
-    fi
-}
-
 # Get current DNS record for domain
 get_current_record() {
     local ip_version="$1"
@@ -213,6 +227,11 @@ get_current_record() {
     if [ -z "$auth_header" ]; then
         echo -e "${RED}Error: No authentication method available${NC}"
         exit 1
+    fi
+
+    # Ensure base_url includes protocol
+    if [[ ! "$base_url" =~ ^https?:// ]]; then
+        base_url="https://$base_url"
     fi
 
     print_curl_cmd "curl $CURL_OPTS -H \"$auth_header\" ${base_url}/control/rewrite/list"
@@ -267,46 +286,6 @@ get_current_record() {
     fi
 }
 
-# Delete existing DNS record
-delete_existing_record() {
-    local record="$1"
-    local auth_header=$(get_auth_header)
-    local CURL_OPTS=$(get_curl_opts)
-    local deleted_ip=$(echo "$record" | grep -o '"answer":"[^"]*"' | cut -d'"' -f4)
-
-    print_curl_cmd "curl $CURL_OPTS -X POST -H \"Content-Type: application/json\" -H \"$auth_header\" -d \"$record\" ${base_url}/control/rewrite/delete"
-    curl $CURL_OPTS -X POST -H "Content-Type: application/json" \
-        -H "$auth_header" \
-        -d "$record" \
-        ${base_url}/control/rewrite/delete >/dev/null 2>&1
-
-    # Wait a moment for the changes to propagate
-    sleep 1
-
-    # Check if the record was actually deleted by querying the list API
-    local all_records=$(get_all_dns_records)
-
-    # Look for the record in the current list
-    local record_exists=""
-    if [[ "$record" == *"\"answer\":\"[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\""* ]]; then
-        # IPv4 record
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
-            grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
-    else
-        # IPv6 record
-        record_exists=$(echo "$all_records" | grep -o "{[^}]*\"domain\":\"${domain}\"[^}]*}" |
-            grep -o "{[^}]*\"answer\":\"$deleted_ip\"[^}]*}" | head -1)
-    fi
-
-    if [ -z "$record_exists" ]; then
-        echo -e "${GREEN}Verified: DNS record was deleted successfully${NC}"
-        return 0
-    else
-        echo -e "${RED}Failed to delete DNS record: Record still exists in the list${NC}"
-        return 1
-    fi
-}
-
 # Create new DNS record
 create_new_record() {
     local new_ip="$1"
@@ -314,12 +293,21 @@ create_new_record() {
     local auth_header=$(get_auth_header)
     local CURL_OPTS=$(get_curl_opts)
 
-    print_curl_cmd "curl $CURL_OPTS -X POST -H \"Content-Type: application/json\" -H \"$auth_header\" -d \"{\\\"domain\\\": \\\"${domain}\\\", \\\"answer\\\": \\\"$new_ip\\\"}\" ${base_url}/control/rewrite/add"
+    # Ensure base_url includes protocol
+    if [[ ! "$base_url" =~ ^https?:// ]]; then
+        base_url="https://$base_url"
+    fi
+
+    # Properly escape the JSON data
+    local json_data="{\"domain\": \"${domain}\", \"answer\": \"$new_ip\"}"
+
+    print_curl_cmd "curl $CURL_OPTS -X POST -H \"Content-Type: application/json\" -H \"$auth_header\" -d \"$json_data\" ${base_url}/control/rewrite/add"
+    
     # Execute the curl command but ignore the response as the API doesn't return meaningful data
     curl $CURL_OPTS -X POST \
         -H "Content-Type: application/json" \
         -H "$auth_header" \
-        -d "{\"domain\": \"${domain}\", \"answer\": \"$new_ip\"}" \
+        -d "$json_data" \
         ${base_url}/control/rewrite/add >/dev/null 2>&1
 
     echo -e "${GREEN}Created new DNS record: ${domain} -> $new_ip${NC}"
@@ -426,8 +414,24 @@ update_dns_record() {
             local auth_header=$(get_auth_header)
             local CURL_OPTS=$(get_curl_opts)
 
-            # Format the JSON correctly
-            local update_json="{\"target\": $existing_record, \"update\": {\"domain\": \"${domain}\", \"answer\": \"$current_ip\"}}"
+            # Format the JSON correctly for update
+            # Create a new object with updated IP instead of modifying existing record
+            local update_json="{\"domain\": \"${domain}\", \"answer\": \"$current_ip\"}"
+            
+            # Add any other fields from the existing record if they exist
+            # Extract all field names except domain and answer
+            local fields=$(echo "$existing_record" | grep -o '"[^"]*":' | sed 's/://g' | sed 's/"//g' | grep -v -E '^(domain|answer)$')
+            
+            # Process each field
+            for field in $fields; do
+                # Extract the value for this field
+                local field_value=$(echo "$existing_record" | grep -o "\"$field\":\"[^\"]*\"" | cut -d'"' -f4)
+                if [ -n "$field_value" ]; then
+                    # Properly escape the field value for JSON
+                    local escaped_value=$(echo "$field_value" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')
+                    update_json=$(echo "$update_json" | sed "s/}/, \"$field\": \"$escaped_value\"}/")
+                fi
+            done
 
             print_curl_cmd "curl $CURL_OPTS -X PUT -H \"Content-Type: application/json\" -H \"$auth_header\" -d '$update_json' ${base_url}/control/rewrite/update"
 
@@ -526,6 +530,9 @@ check_auth() {
 main() {
     echo -e "${BLUE}AdGuard Private DDNS Update Script${NC}"
     echo -e "${BLUE}=============================${NC}"
+
+    # Parse command line arguments
+    parse_args "$@"
 
     # Check if all essential parameters are provided
     check_params
