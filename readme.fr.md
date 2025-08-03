@@ -50,7 +50,7 @@ Set-ExecutionPolicy Bypass -Scope Process
 .\ddns.ps1 -BaseUrl <base_url> -Username <username> -Password <password> -Domain <domain>
 ```
 
-**Linux**
+**Linux/macOS**
 
 ```shell
 chmod +x ddns.sh
