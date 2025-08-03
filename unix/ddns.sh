@@ -55,6 +55,8 @@ parse_args() {
         case $1 in
             -b|--base-url)
                 base_url="$2"
+                # Remove trailing slash from base_url if present
+                base_url="${base_url%/}"
                 shift 2
                 ;;
             -u|--username)
@@ -533,6 +535,9 @@ main() {
 
     # Parse command line arguments
     parse_args "$@"
+
+    # Remove trailing slash from base_url if present
+    base_url="${base_url%/}"
 
     # Check if all essential parameters are provided
     check_params

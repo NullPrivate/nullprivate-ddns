@@ -15,6 +15,8 @@ param(
 
 # Configuration - modify before running
 $base_url = if ($PSBoundParameters.ContainsKey('BaseUrl')) { $BaseUrl } else { "{{server_name}}" }  # Example: http://localhost:34020 or https://dns.example.com
+# Remove trailing slash from base_url if present
+$base_url = $base_url.TrimEnd('/')
 $username = if ($PSBoundParameters.ContainsKey('Username')) { $Username } else { "{{username}}" }     # AdGuard Private username
 $password = if ($PSBoundParameters.ContainsKey('Password')) { $Password } else { "{{password}}" }     # AdGuard Private password
 $domain = if ($PSBoundParameters.ContainsKey('Domain')) { $Domain } else { "{{domain}}" }             # Domain to update, e.g.: nas.example.com
