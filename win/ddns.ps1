@@ -37,7 +37,7 @@ $TEMP_FILE_IPV6 = "$env:TEMP\adguard_ddns_ipv6.tmp"
 function Show-Usage {
     Write-Host "Usage:" -ForegroundColor Blue
     Write-Host "  Edit the script and set the following parameters before running or pass as arguments:"
-    Write-Host "  -BaseUrl  - AdGuard Private server URL (e.g., https://{xxxxxxxxxxxxxxxx}.adguardprivate.com)" -ForegroundColor Yellow
+    Write-Host "  -BaseUrl  - AdGuard Private server URL (e.g., https://{xxxxxxxxxxxxxxxx}.nullprivate.com)" -ForegroundColor Yellow
     Write-Host "  -Domain   - Domain to update (e.g., nas.example.com)" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "  For authentication, use one of the following methods:" -ForegroundColor White
@@ -53,15 +53,15 @@ function Show-Usage {
     Write-Host "  -EnableIPv6 - Enable/disable IPv6 DDNS updates (true/false)" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "  Example usage:" -ForegroundColor White
-    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com'"
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.nullprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com'"
     Write-Host ""
     Write-Host "    # OR using cookies instead of username/password:" -ForegroundColor White
-    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Cookies 'agh_session=abc123' -Domain 'nas.example.com'"
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.nullprivate.com' -Cookies 'agh_session=abc123' -Domain 'nas.example.com'"
     Write-Host ""
     Write-Host "    # OR disabling IPv6 updates:" -ForegroundColor White
-    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.adguardprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com' -EnableIPv6 `$false"
+    Write-Host "    .\ddns.ps1 -BaseUrl 'https://{xxxxxxxxxxxxxxxx}.nullprivate.com' -Username 'admin' -Password 'password123' -Domain 'nas.example.com' -EnableIPv6 `$false"
     Write-Host ""
-    Write-Host "Note: This script is specifically developed for adguardprivate.com" -ForegroundColor Blue
+    Write-Host "Note: This script is specifically developed for nullprivate.com" -ForegroundColor Blue
     exit
 }
 

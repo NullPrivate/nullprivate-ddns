@@ -7,14 +7,14 @@
 ## 概要
 
 AdGuard プライベート DDNS は、ドメインを購入することなく、簡単にプライベートなダイナミック DNS (DDNS) を迅速に設定する方法を提供します。
-この DDNS スクリプトは [adguardprivate.com](https://adguardprivate.com) 向けに開発され、AdGuardPrivate の基本機能を利用してシームレスにこの機能を実現できます。
+この DDNS スクリプトは [nullprivate.com](https://nullprivate.com) 向けに開発され、AdGuardPrivate の基本機能を利用してシームレスにこの機能を実現できます。
 AdGuardHome を自己ホストしている場合も、このスクリプトを使用して AdGuardHome の DDNS を設定できます。
 
 ## はじめに
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. AdGuardPrivate をデプロイして実行していること
 2. **DNS 書き換え**に移動し、DDNS スクリプトをダウンロード
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome をデプロイして実行していること
-2. [リリース](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)からスクリプトをダウンロード
+2. [リリース](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)からスクリプトをダウンロード
 3. スクリプトを実行
 
 **Windows**

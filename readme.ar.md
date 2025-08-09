@@ -7,14 +7,14 @@
 ## نظرة عامة
 
 يهدف AdGuard DDNS الخاص إلى توفير طريقة بسيطة لإعداد DNS الديناميكي الخاص (DDNS) بسرعة دون الحاجة إلى شراء نطاق.
-تم تطوير هذا النص خصيصًا لـ [adguardprivate.com](https://adguardprivate.com)، حيث يمكنك تحقيق هذه الوظيفة بسلاسة من خلال الاستفادة من الوظائف الأساسية لـ AdGuardPrivate.
+تم تطوير هذا النص خصيصًا لـ [nullprivate.com](https://nullprivate.com)، حيث يمكنك تحقيق هذه الوظيفة بسلاسة من خلال الاستفادة من الوظائف الأساسية لـ AdGuardPrivate.
 إذا كنت قد قمت بنشر AdGuardHome بنفسك، فيمكنك أيضًا استخدام هذا النص لإعداد DDNS لـ AdGuardHome.
 
 ## البدء
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. تأكد من نشر وتشغيل AdGuardPrivate
 2. انتقل إلى **إعادة كتابة DNS**، وقم بتنزيل نص DDNS
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. تأكد من نشر وتشغيل AdGuardHome
-2. قم بتنزيل النص من [الإصدارات](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)
+2. قم بتنزيل النص من [الإصدارات](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
 3. تشغيل النص
 
 **ويندوز**

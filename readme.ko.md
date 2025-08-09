@@ -7,14 +7,14 @@
 ## 개요
 
 AdGuard 개인 DDNS는 도메인을 구매할 필요 없이 개인 동적 DNS(DDNS)를 빠르게 설정할 수 있는 간단한 방법을 제공합니다.
-이 DDNS 스크립트는 [adguardprivate.com](https://adguardprivate.com)을 위해 개발되었으며, AdGuardPrivate의 기본 기능을 활용하여 이 기능을 원활하게 구현할 수 있습니다.
+이 DDNS 스크립트는 [nullprivate.com](https://nullprivate.com)을 위해 개발되었으며, AdGuardPrivate의 기본 기능을 활용하여 이 기능을 원활하게 구현할 수 있습니다.
 AdGuardHome을 자체 배포한 경우에도 이 스크립트를 사용하여 AdGuardHome의 DDNS를 설정할 수 있습니다.
 
 ## 시작하기
 
-### AdguardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. AdGuardPrivate가 배포되어 실행 중인지 확인
 2. **DNS 재작성**으로 이동하여 DDNS 스크립트 다운로드
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome이 배포되어 실행 중인지 확인
-2. [릴리스](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)에서 스크립트 다운로드
+2. [릴리스](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)에서 스크립트 다운로드
 3. 스크립트 실행
 
 **Windows**

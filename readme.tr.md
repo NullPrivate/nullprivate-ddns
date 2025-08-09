@@ -7,14 +7,14 @@ Bu proje [@jqknono](https://github.com/jqknono) tarafından katkı sağlanmışt
 ## Genel Bakış
 
 AdGuard Özel DDNS, alan adı satın almadan hızlı bir şekilde özel dinamik DNS (DDNS) kurmanın basit bir yolunu sunmayı amaçlamaktadır.
-Bu DDNS betiği [adguardprivate.com](https://adguardprivate.com) için geliştirilmiştir, AdGuardPrivate'ın temel işlevlerinden yararlanarak bu özelliği sorunsuz bir şekilde uygulayabilirsiniz.
+Bu DDNS betiği [nullprivate.com](https://nullprivate.com) için geliştirilmiştir, AdGuardPrivate'ın temel işlevlerinden yararlanarak bu özelliği sorunsuz bir şekilde uygulayabilirsiniz.
 Eğer kendi AdGuardHome'unuzu dağıttıysanız, bu betiği AdGuardHome'un DDNS'sini ayarlamak için de kullanabilirsiniz.
 
 ## Başlarken
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. AdGuardPrivate'ı dağıtın ve çalıştırın
 2. **DNS Yeniden Yazma** bölümüne gidin, DDNS betiğini indirin
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome'u dağıtın ve çalıştırın
-2. [release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases) sayfasından betiği indirin
+2. [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases) sayfasından betiği indirin
 3. Betiği çalıştırın
 
 **Windows**

@@ -26,7 +26,7 @@ DEBUG=0
 show_usage() {
     echo -e "${BLUE}Usage:${NC}"
     echo -e "  Run the script with the following command line options:"
-    echo -e "  ${YELLOW}-b, --base-url${NC}     AdGuard Private server URL (e.g., https://public3.adguardprivate.com)"
+    echo -e "  ${YELLOW}-b, --base-url${NC}     AdGuard Private server URL (e.g., https://xxxxxxxx.nullprivate.com)"
     echo -e "  ${YELLOW}-u, --username${NC}    AdGuard Private username"
     echo -e "  ${YELLOW}-p, --password${NC}    AdGuard Private password"
     echo -e "  ${YELLOW}-d, --domain${NC}      Domain to update (e.g., nas.example.com)"
@@ -37,15 +37,15 @@ show_usage() {
     echo -e "  ${YELLOW}-h, --help${NC}        Show this help message"
     echo -e ""
     echo -e "  Example usage:"
-    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -u jqknono -p 123456li -d nas.home"
+    echo -e "    ./ddns.sh -b https://xxxxxxxx.nullprivate.com -u test -p testtest -d nas.home"
     echo -e ""
     echo -e "    # OR using cookies instead of username/password:"
-    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -c \"agh_session=abc123\" -d nas.home"
+    echo -e "    ./ddns.sh -b https://xxxxxxxx.nullprivate.com -c \"agh_session=abc123\" -d nas.home"
     echo -e ""
     echo -e "    # OR disabling IPv6 updates:"
-    echo -e "    ./ddns.sh -b https://public3.adguardprivate.com -u jqknono -p 123456li -d nas.home --ipv6 false"
+    echo -e "    ./ddns.sh -b https://xxxxxxxx.nullprivate.com -u test -p testtest -d nas.home --ipv6 false"
     echo -e ""
-    echo -e "${BLUE}Note:${NC} This script is specifically developed for adguardprivate.com"
+    echo -e "${BLUE}Note:${NC} This script is specifically developed for nullprivate.com"
     exit 1
 }
 

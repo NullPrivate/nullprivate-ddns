@@ -7,14 +7,14 @@ Tämän projektin on luonut [@jqknono](https://github.com/jqknono).
 ## Yleiskatsaus
 
 AdGuard Yksityinen DDNS tarjoaa yksinkertaisen tavan nopeaan dynaamisen DNS:n (DDNS) asetukseen ilman verkkotunnuksen ostamista.
-Tämä DDNS-skripti on kehitetty erityisesti [adguardprivate.com](https://adguardprivate.com) -palvelua varten, ja AdGuardPrivate:n perustoimintoja hyödyntämällä voit saada tämän toiminnon käyttöösi saumattomasti.
+Tämä DDNS-skripti on kehitetty erityisesti [nullprivate.com](https://nullprivate.com) -palvelua varten, ja AdGuardPrivate:n perustoimintoja hyödyntämällä voit saada tämän toiminnon käyttöösi saumattomasti.
 Jos olet jo asentanut AdGuardHome:n, voit käyttää tätä skriptiä myös AdGuardHome:n DDNS:n asetukseen.
 
 ## Käyttöönotto
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. AdGuardPrivate on asennettu ja käynnissä
 2. Siirry **DNS-ohitukset** -osioon ja lataa DDNS-skripti
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome on asennettu ja käynnissä
-2. Lataa skripti [release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases) -sivulta
+2. Lataa skripti [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases) -sivulta
 3. Suorita skripti
 
 **Windows**

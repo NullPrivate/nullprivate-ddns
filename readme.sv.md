@@ -7,14 +7,14 @@ Detta projekt bidrog av [@jqknono](https://github.com/jqknono).
 ## Översikt
 
 AdGuard Privat DDNS syftar till att erbjuda ett enkelt sätt att snabbt sätta upp en privat dynamisk DNS (DDNS) utan att behöva köpa en domän.
-Detta DDNS-skript är utvecklat specifikt för [adguardprivate.com](https://adguardprivate.com), och genom att utnyttja AdGuardPrivats grundläggande funktioner kan du sömlöst implementera denna funktion.
+Detta DDNS-skript är utvecklat specifikt för [nullprivate.com](https://nullprivate.com), och genom att utnyttja AdGuardPrivats grundläggande funktioner kan du sömlöst implementera denna funktion.
 Om du redan har självdistribuerat AdGuardHome kan du också använda detta skript för att konfigurera AdGuardHomes DDNS.
 
 ## Komma igång
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. Har distribuerat och kör AdGuardPrivate
 2. Navigera till **DNS-omskrivning**, ladda ner DDNS-skriptet
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. Har distribuerat och kör AdGuardHome
-2. Ladda ner skriptet från [release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)
+2. Ladda ner skriptet från [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
 3. Kör skriptet
 
 **Windows**

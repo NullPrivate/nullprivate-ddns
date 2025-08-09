@@ -7,14 +7,14 @@
 ## 概述
 
 AdGuard 私人 DDNS 旨在提供一种简单的方法来快速设置私人动态 DNS (DDNS)，无需购买域名。
-此 DDNS 脚本专为 [adguardprivate.com](https://adguardprivate.com) 开发，通过利用 AdGuardPrivate 的基础功能，您可以无缝实现此功能。
+此 DDNS 脚本专为 [nullprivate.com](https://nullprivate.com) 开发，通过利用 AdGuardPrivate 的基础功能，您可以无缝实现此功能。
 如果你已自部署了 AdGuardHome, 也可以使用此脚本来设置 AdGuardHome 的 DDNS。
 
 ## 开始使用
 
-### AdguardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. 已部署并运行 AdGuardPrivate
 2. 导航到**DNS 重写**, 下载 DDNS 脚本
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. 已部署并运行 AdGuardHome
-2. 从[release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)下载脚本
+2. 从[release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)下载脚本
 3. 运行脚本
 
 **Windows**

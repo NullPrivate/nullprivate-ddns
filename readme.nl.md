@@ -7,14 +7,14 @@ Dit project is bijgedragen door [@jqknono](https://github.com/jqknono).
 ## Overzicht
 
 AdGuard Privé DDNS is ontworpen om een eenvoudige manier te bieden om snel een privé dynamische DNS (DDNS) in te stellen zonder een domeinnaam te hoeven kopen.
-Dit DDNS-script is speciaal ontwikkeld voor [adguardprivate.com](https://adguardprivate.com), door gebruik te maken van de basisfunctionaliteit van AdGuardPrivate kunt u deze functie naadloos implementeren.
+Dit DDNS-script is speciaal ontwikkeld voor [nullprivate.com](https://nullprivate.com), door gebruik te maken van de basisfunctionaliteit van AdGuardPrivate kunt u deze functie naadloos implementeren.
 Als u AdGuardHome zelf hebt geïmplementeerd, kunt u dit script ook gebruiken om de DDNS van AdGuardHome in te stellen.
 
 ## Aan de slag
 
 ### AdGuardPrivate
 
-![AdGuardPrivate](./assets/adguardprivate.webp)
+![AdGuardPrivate](./assets/nullprivate.webp)
 
 1. AdGuardPrivate is geïmplementeerd en actief
 2. Navigeer naar **DNS Herschrijving**, download het DDNS-script
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome is geïmplementeerd en actief
-2. Download het script van [release](https://github.com/AdGuardPrivate/adguardprivate-ddns/releases)
+2. Download het script van [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
 3. Voer het script uit
 
 **Windows**
