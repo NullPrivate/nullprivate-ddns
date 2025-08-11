@@ -7,16 +7,16 @@
 ## 概述
 
 AdGuard 私人 DDNS 旨在提供一种简单的方法来快速设置私人动态 DNS (DDNS)，无需购买域名。
-此 DDNS 脚本专为 [nullprivate.com](https://nullprivate.com) 开发，通过利用 AdGuardPrivate 的基础功能，您可以无缝实现此功能。
+此 DDNS 脚本专为 [nullprivate.com](https://nullprivate.com) 开发，通过利用 NullPrivate 的基础功能，您可以无缝实现此功能。
 如果你已自部署了 AdGuardHome, 也可以使用此脚本来设置 AdGuardHome 的 DDNS。
 
 ## 开始使用
 
 ### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. 已部署并运行 AdGuardPrivate
+1. 已部署并运行 NullPrivate
 2. 导航到**DNS 重写**, 下载 DDNS 脚本
 3. 运行脚本
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. 已部署并运行 AdGuardHome
-2. 从[release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)下载脚本
+2. 从[release](https://github.com/NullPrivate/nullprivate-ddns/releases)下载脚本
 3. 运行脚本
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## 功能
 
 - 快速且易于设置。
-- 利用 AdGuardPrivate 实现 DDNS 功能。
+- 利用 NullPrivate 实现 DDNS 功能。
 - 支持 Windows 和基于 Unix 的系统。
 - 多种认证选项：cookies（更安全但可能过期）或用户名/密码（更持久但安全性较低）。
 - **AdGuardHome 支持**：完全兼容 AdGuardHome，利用其功能实现无缝 DDNS 设置。
@@ -76,7 +76,7 @@ chmod +x ddns.sh
 
 ## 入门指南
 
-1. 确保已安装并运行 AdGuardPrivate 或 AdGuardHome。
+1. 确保已安装并运行 NullPrivate 或 AdGuardHome。
 2. 按照 `win/ddns.ps1`（适用于 Windows）或 `unix/ddns.sh`（适用于基于 Unix 的系统）脚本中提供的说明配置您的私人 DDNS。
 
 ## 许可证

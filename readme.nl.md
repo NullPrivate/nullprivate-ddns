@@ -7,16 +7,16 @@ Dit project is bijgedragen door [@jqknono](https://github.com/jqknono).
 ## Overzicht
 
 AdGuard Privé DDNS is ontworpen om een eenvoudige manier te bieden om snel een privé dynamische DNS (DDNS) in te stellen zonder een domeinnaam te hoeven kopen.
-Dit DDNS-script is speciaal ontwikkeld voor [nullprivate.com](https://nullprivate.com), door gebruik te maken van de basisfunctionaliteit van AdGuardPrivate kunt u deze functie naadloos implementeren.
+Dit DDNS-script is speciaal ontwikkeld voor [nullprivate.com](https://nullprivate.com), door gebruik te maken van de basisfunctionaliteit van NullPrivate kunt u deze functie naadloos implementeren.
 Als u AdGuardHome zelf hebt geïmplementeerd, kunt u dit script ook gebruiken om de DDNS van AdGuardHome in te stellen.
 
 ## Aan de slag
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. AdGuardPrivate is geïmplementeerd en actief
+1. NullPrivate is geïmplementeerd en actief
 2. Navigeer naar **DNS Herschrijving**, download het DDNS-script
 3. Voer het script uit
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome is geïmplementeerd en actief
-2. Download het script van [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
+2. Download het script van [release](https://github.com/NullPrivate/nullprivate-ddns/releases)
 3. Voer het script uit
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Functies
 
 - Snel en eenvoudig in te stellen.
-- Maakt gebruik van AdGuardPrivate voor DDNS-functionaliteit.
+- Maakt gebruik van NullPrivate voor DDNS-functionaliteit.
 - Ondersteuning voor Windows en Unix-gebaseerde systemen.
 - Meerdere authenticatie-opties: cookies (veiliger maar kunnen verlopen) of gebruikersnaam/wachtwoord (duurzamer maar minder veilig).
 - **AdGuardHome-ondersteuning**: Volledig compatibel met AdGuardHome, maakt gebruik van zijn functionaliteit voor naadloze DDNS-instelling.
@@ -76,7 +76,7 @@ In tegenstelling tot traditionele DDNS heeft deze privé DDNS de volgende voorde
 
 ## Startgids
 
-1. Zorg ervoor dat AdGuardPrivate of AdGuardHome is geïnstalleerd en actief is.
+1. Zorg ervoor dat NullPrivate of AdGuardHome is geïnstalleerd en actief is.
 2. Volg de instructies in het script `win/ddns.ps1` (voor Windows) of `unix/ddns.sh` (voor Unix-gebaseerde systemen) om uw privé DDNS te configureren.
 
 ## Licentie

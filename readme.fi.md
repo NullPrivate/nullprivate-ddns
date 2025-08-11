@@ -7,16 +7,16 @@ Tämän projektin on luonut [@jqknono](https://github.com/jqknono).
 ## Yleiskatsaus
 
 AdGuard Yksityinen DDNS tarjoaa yksinkertaisen tavan nopeaan dynaamisen DNS:n (DDNS) asetukseen ilman verkkotunnuksen ostamista.
-Tämä DDNS-skripti on kehitetty erityisesti [nullprivate.com](https://nullprivate.com) -palvelua varten, ja AdGuardPrivate:n perustoimintoja hyödyntämällä voit saada tämän toiminnon käyttöösi saumattomasti.
+Tämä DDNS-skripti on kehitetty erityisesti [nullprivate.com](https://nullprivate.com) -palvelua varten, ja NullPrivate:n perustoimintoja hyödyntämällä voit saada tämän toiminnon käyttöösi saumattomasti.
 Jos olet jo asentanut AdGuardHome:n, voit käyttää tätä skriptiä myös AdGuardHome:n DDNS:n asetukseen.
 
 ## Käyttöönotto
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. AdGuardPrivate on asennettu ja käynnissä
+1. NullPrivate on asennettu ja käynnissä
 2. Siirry **DNS-ohitukset** -osioon ja lataa DDNS-skripti
 3. Suorita skripti
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome on asennettu ja käynnissä
-2. Lataa skripti [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases) -sivulta
+2. Lataa skripti [release](https://github.com/NullPrivate/nullprivate-ddns/releases) -sivulta
 3. Suorita skripti
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Ominaisuudet
 
 - Nopea ja helppo asentaa
-- Hyödyntää AdGuardPrivatea DDNS-toiminnon toteuttamiseen
+- Hyödyntää NullPrivatea DDNS-toiminnon toteuttamiseen
 - Tukee Windowsia ja Unix-pohjaisia järjestelmiä
 - Useita tunnistautumisvaihtoehtoja: evästeet (turvallisempi, mutta voi vanhentua) tai käyttäjätunnus/salasana (kestävämpi, mutta vähemmän turvallinen)
 - **AdGuardHome-tuki**: Täysin yhteensopiva AdGuardHomen kanssa, hyödyntäen sen toimintoja saumattomaan DDNS-asetukseen
@@ -76,7 +76,7 @@ Toisin kuin perinteinen DDNS, tällä yksityisellä DDNS:llä on seuraavat edut:
 
 ## Aloitusopas
 
-1. Varmista, että AdGuardPrivate tai AdGuardHome on asennettu ja käynnissä
+1. Varmista, että NullPrivate tai AdGuardHome on asennettu ja käynnissä
 2. Noudata `win/ddns.ps1` (Windows) tai `unix/ddns.sh` (Unix-pohjaiset järjestelmät) -skripteissä annettuja ohjeita yksityisen DDNS:n määrittämiseksi
 
 ## Lisenssi

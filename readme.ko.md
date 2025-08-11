@@ -7,16 +7,16 @@
 ## 개요
 
 AdGuard 개인 DDNS는 도메인을 구매할 필요 없이 개인 동적 DNS(DDNS)를 빠르게 설정할 수 있는 간단한 방법을 제공합니다.
-이 DDNS 스크립트는 [nullprivate.com](https://nullprivate.com)을 위해 개발되었으며, AdGuardPrivate의 기본 기능을 활용하여 이 기능을 원활하게 구현할 수 있습니다.
+이 DDNS 스크립트는 [nullprivate.com](https://nullprivate.com)을 위해 개발되었으며, NullPrivate의 기본 기능을 활용하여 이 기능을 원활하게 구현할 수 있습니다.
 AdGuardHome을 자체 배포한 경우에도 이 스크립트를 사용하여 AdGuardHome의 DDNS를 설정할 수 있습니다.
 
 ## 시작하기
 
 ### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. AdGuardPrivate가 배포되어 실행 중인지 확인
+1. NullPrivate가 배포되어 실행 중인지 확인
 2. **DNS 재작성**으로 이동하여 DDNS 스크립트 다운로드
 3. 스크립트 실행
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome이 배포되어 실행 중인지 확인
-2. [릴리스](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)에서 스크립트 다운로드
+2. [릴리스](https://github.com/NullPrivate/nullprivate-ddns/releases)에서 스크립트 다운로드
 3. 스크립트 실행
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## 기능
 
 - 빠르고 쉽게 설정 가능
-- AdGuardPrivate를 활용한 DDNS 기능 지원
+- NullPrivate를 활용한 DDNS 기능 지원
 - Windows 및 Unix 기반 시스템 지원
 - 다양한 인증 옵션: 쿠키(더 안전하지만 만료될 수 있음) 또는 사용자 이름/비밀번호(더 오래 지속되지만 보안성이 낮음)
 - **AdGuardHome 지원**: AdGuardHome과 완벽 호환되어 원활한 DDNS 설정 가능
@@ -76,7 +76,7 @@ chmod +x ddns.sh
 
 ## 시작 가이드
 
-1. AdGuardPrivate 또는 AdGuardHome이 설치되어 실행 중인지 확인
+1. NullPrivate 또는 AdGuardHome이 설치되어 실행 중인지 확인
 2. Windows용 `win/ddns.ps1` 또는 Unix 기반 시스템용 `unix/ddns.sh` 스크립트에 제공된 지침에 따라 개인 DDNS를 구성
 
 ## 라이선스

@@ -7,16 +7,16 @@ Bu proje [@jqknono](https://github.com/jqknono) tarafından katkı sağlanmışt
 ## Genel Bakış
 
 AdGuard Özel DDNS, alan adı satın almadan hızlı bir şekilde özel dinamik DNS (DDNS) kurmanın basit bir yolunu sunmayı amaçlamaktadır.
-Bu DDNS betiği [nullprivate.com](https://nullprivate.com) için geliştirilmiştir, AdGuardPrivate'ın temel işlevlerinden yararlanarak bu özelliği sorunsuz bir şekilde uygulayabilirsiniz.
+Bu DDNS betiği [nullprivate.com](https://nullprivate.com) için geliştirilmiştir, NullPrivate'ın temel işlevlerinden yararlanarak bu özelliği sorunsuz bir şekilde uygulayabilirsiniz.
 Eğer kendi AdGuardHome'unuzu dağıttıysanız, bu betiği AdGuardHome'un DDNS'sini ayarlamak için de kullanabilirsiniz.
 
 ## Başlarken
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. AdGuardPrivate'ı dağıtın ve çalıştırın
+1. NullPrivate'ı dağıtın ve çalıştırın
 2. **DNS Yeniden Yazma** bölümüne gidin, DDNS betiğini indirin
 3. Betiği çalıştırın
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome'u dağıtın ve çalıştırın
-2. [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases) sayfasından betiği indirin
+2. [release](https://github.com/NullPrivate/nullprivate-ddns/releases) sayfasından betiği indirin
 3. Betiği çalıştırın
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Özellikler
 
 - Hızlı ve kolay kurulum.
-- DDNS işlevselliği için AdGuardPrivate'ı kullanır.
+- DDNS işlevselliği için NullPrivate'ı kullanır.
 - Windows ve Unix tabanlı sistemleri destekler.
 - Çoklu kimlik doğrulama seçenekleri: çerezler (daha güvenli ancak süresi dolabilir) veya kullanıcı adı/şifre (daha kalıcı ancak daha az güvenli).
 - **AdGuardHome desteği**: AdGuardHome ile tam uyumludur, sorunsuz DDNS kurulumu için işlevlerinden yararlanır.
@@ -76,7 +76,7 @@ Geleneksel DDNS'den farklı olarak, bu özel DDNS aşağıdaki avantajlara sahip
 
 ## Başlangıç Kılavuzu
 
-1. AdGuardPrivate veya AdGuardHome'un kurulu ve çalışır durumda olduğundan emin olun.
+1. NullPrivate veya AdGuardHome'un kurulu ve çalışır durumda olduğundan emin olun.
 2. Windows için `win/ddns.ps1` veya Unix tabanlı sistemler için `unix/ddns.sh` betiğinde sağlanan talimatları izleyerek özel DDNS'nizi yapılandırın.
 
 ## Lisans

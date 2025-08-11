@@ -12,11 +12,11 @@ Om du redan har självdistribuerat AdGuardHome kan du också använda detta skri
 
 ## Komma igång
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. Har distribuerat och kör AdGuardPrivate
+1. Har distribuerat och kör NullPrivate
 2. Navigera till **DNS-omskrivning**, ladda ner DDNS-skriptet
 3. Kör skriptet
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. Har distribuerat och kör AdGuardHome
-2. Ladda ner skriptet från [release](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
+2. Ladda ner skriptet från [release](https://github.com/NullPrivate/nullprivate-ddns/releases)
 3. Kör skriptet
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Funktioner
 
 - Snabb och enkel att sätta upp.
-- Utnyttjar AdGuardPrivate för DDNS-funktionalitet.
+- Utnyttjar NullPrivate för DDNS-funktionalitet.
 - Stöd för Windows och Unix-baserade system.
 - Flera autentiseringsalternativ: cookies (säkrare men kan gå ut) eller användarnamn/lösenord (mer beständigt men mindre säkert).
 - **AdGuardHome-stöd**: Fullt kompatibel med AdGuardHome, utnyttjar dess funktioner för sömlös DDNS-konfiguration.
@@ -76,7 +76,7 @@ Till skillnad från traditionell DDNS har denna privata DDNS följande fördelar
 
 ## Komma igång-guide
 
-1. Se till att AdGuardPrivate eller AdGuardHome är installerat och körs.
+1. Se till att NullPrivate eller AdGuardHome är installerat och körs.
 2. Följ instruktionerna i skripten `win/ddns.ps1` (för Windows) eller `unix/ddns.sh` (för Unix-baserade system) för att konfigurera din privata DDNS.
 
 ## Licens

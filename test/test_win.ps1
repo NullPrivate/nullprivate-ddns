@@ -10,8 +10,8 @@ $testIPv6 = "2001:db8::1"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootDir = Split-Path -Parent $scriptDir
 $scriptPath = Join-Path $rootDir "win\ddns.ps1"
-$adGuardPrivatePath = Join-Path $rootDir "bin\AdGuardPrivate.exe"
-$configPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml"
+$adGuardPrivatePath = Join-Path $rootDir "bin\NullPrivate.exe"
+$configPath = Join-Path $rootDir "bin\NullPrivate.yaml"
 $adGuardProcess = $null
 
 # Create test temp directory
@@ -38,7 +38,7 @@ Function Cleanup-TempFiles {
     }
 }
 
-Function Start-AdGuardPrivate {
+Function Start-NullPrivate {
     Write-Host "Checking if AdGuard Private is already running..." -ForegroundColor Cyan
     try {
         # Check if AdGuard Private is already running
@@ -141,7 +141,7 @@ Function Start-AdGuardPrivate {
     }
 }
 
-Function Stop-AdGuardPrivate {
+Function Stop-NullPrivate {
     Write-Host "Stopping AdGuard Private..." -ForegroundColor Cyan
     if ($script:adGuardProcess -ne $null) {
         try {
@@ -155,8 +155,8 @@ Function Stop-AdGuardPrivate {
     
     # Restore the original configuration by copying the backup file
     try {
-        $configPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml"
-        $backupPath = Join-Path $rootDir "bin\AdGuardPrivate.yaml.bak"
+        $configPath = Join-Path $rootDir "bin\NullPrivate.yaml"
+        $backupPath = Join-Path $rootDir "bin\NullPrivate.yaml.bak"
         
         if (Test-Path $backupPath) {
             Write-Host "Restoring original configuration from backup..." -ForegroundColor Cyan
@@ -377,7 +377,7 @@ Function Run-AllTests {
     Cleanup-TempFiles
     
     # Start AdGuard Private
-    if (-not (Start-AdGuardPrivate)) {
+    if (-not (Start-NullPrivate)) {
         Write-Host "Failed to start AdGuard Private. Tests aborted." -ForegroundColor Red
         return
     }
@@ -435,7 +435,7 @@ Function Run-AllTests {
     }
     finally {
         # Stop AdGuard Private
-        Stop-AdGuardPrivate
+        Stop-NullPrivate
         
         # Final cleanup
         Cleanup-TempFiles

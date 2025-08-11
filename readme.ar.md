@@ -7,16 +7,16 @@
 ## نظرة عامة
 
 يهدف AdGuard DDNS الخاص إلى توفير طريقة بسيطة لإعداد DNS الديناميكي الخاص (DDNS) بسرعة دون الحاجة إلى شراء نطاق.
-تم تطوير هذا النص خصيصًا لـ [nullprivate.com](https://nullprivate.com)، حيث يمكنك تحقيق هذه الوظيفة بسلاسة من خلال الاستفادة من الوظائف الأساسية لـ AdGuardPrivate.
+تم تطوير هذا النص خصيصًا لـ [nullprivate.com](https://nullprivate.com)، حيث يمكنك تحقيق هذه الوظيفة بسلاسة من خلال الاستفادة من الوظائف الأساسية لـ NullPrivate.
 إذا كنت قد قمت بنشر AdGuardHome بنفسك، فيمكنك أيضًا استخدام هذا النص لإعداد DDNS لـ AdGuardHome.
 
 ## البدء
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. تأكد من نشر وتشغيل AdGuardPrivate
+1. تأكد من نشر وتشغيل NullPrivate
 2. انتقل إلى **إعادة كتابة DNS**، وقم بتنزيل نص DDNS
 3. تشغيل النص
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. تأكد من نشر وتشغيل AdGuardHome
-2. قم بتنزيل النص من [الإصدارات](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
+2. قم بتنزيل النص من [الإصدارات](https://github.com/NullPrivate/nullprivate-ddns/releases)
 3. تشغيل النص
 
 **ويندوز**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## الميزات
 
 - سريع وسهل الإعداد.
-- يستخدم AdGuardPrivate لتحقيق وظيفة DDNS.
+- يستخدم NullPrivate لتحقيق وظيفة DDNS.
 - يدعم أنظمة ويندوز وأنظمة يونكس.
 - خيارات متعددة للمصادقة: ملفات تعريف الارتباط (أكثر أمانًا ولكن قد تنتهي صلاحيتها) أو اسم المستخدم/كلمة المرور (أكثر ديمومة ولكن أقل أمانًا).
 - **دعم AdGuardHome**: متوافق بالكامل مع AdGuardHome، ويستخدم وظائفه لإعداد DDNS بسلاسة.
@@ -76,7 +76,7 @@ chmod +x ddns.sh
 
 ## دليل البدء
 
-1. تأكد من تثبيت وتشغيل AdGuardPrivate أو AdGuardHome.
+1. تأكد من تثبيت وتشغيل NullPrivate أو AdGuardHome.
 2. اتبع التعليمات المقدمة في النص `win/ddns.ps1` (لـ Windows) أو `unix/ddns.sh` (لأنظمة يونكس) لتكوين DDNS الخاص بك.
 
 ## الترخيص

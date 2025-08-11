@@ -7,16 +7,16 @@
 ## 概要
 
 AdGuard プライベート DDNS は、ドメインを購入することなく、簡単にプライベートなダイナミック DNS (DDNS) を迅速に設定する方法を提供します。
-この DDNS スクリプトは [nullprivate.com](https://nullprivate.com) 向けに開発され、AdGuardPrivate の基本機能を利用してシームレスにこの機能を実現できます。
+この DDNS スクリプトは [nullprivate.com](https://nullprivate.com) 向けに開発され、NullPrivate の基本機能を利用してシームレスにこの機能を実現できます。
 AdGuardHome を自己ホストしている場合も、このスクリプトを使用して AdGuardHome の DDNS を設定できます。
 
 ## はじめに
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. AdGuardPrivate をデプロイして実行していること
+1. NullPrivate をデプロイして実行していること
 2. **DNS 書き換え**に移動し、DDNS スクリプトをダウンロード
 3. スクリプトを実行
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. AdGuardHome をデプロイして実行していること
-2. [リリース](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)からスクリプトをダウンロード
+2. [リリース](https://github.com/NullPrivate/nullprivate-ddns/releases)からスクリプトをダウンロード
 3. スクリプトを実行
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## 機能
 
 - 迅速かつ簡単に設定可能
-- AdGuardPrivate を利用した DDNS 機能
+- NullPrivate を利用した DDNS 機能
 - Windows および Unix ベースのシステムをサポート
 - 複数の認証オプション: クッキー（より安全だが期限切れの可能性あり）またはユーザー名/パスワード（より持続的だが安全性は低い）
 - **AdGuardHome サポート**: AdGuardHome と完全互換で、シームレスな DDNS 設定を実現
@@ -76,7 +76,7 @@ chmod +x ddns.sh
 
 ## スタートガイド
 
-1. AdGuardPrivate または AdGuardHome がインストールされ実行されていることを確認
+1. NullPrivate または AdGuardHome がインストールされ実行されていることを確認
 2. Windows の場合は `win/ddns.ps1`、Unix ベースのシステムの場合は `unix/ddns.sh` スクリプトに記載されている手順に従ってプライベート DDNS を設定
 
 ## ライセンス

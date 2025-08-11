@@ -27,9 +27,9 @@ TEST_IPV6="2001:db8::1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 SCRIPT_PATH="$ROOT_DIR/unix/ddns.sh"
-ADGUARD_PRIVATE_PATH="$ROOT_DIR/bin/AdGuardPrivate.linux"
-CONFIG_PATH="$ROOT_DIR/bin/AdGuardPrivate.yaml"
-BACKUP_CONFIG_PATH="$ROOT_DIR/bin/AdGuardPrivate.yaml.bak"
+ADGUARD_PRIVATE_PATH="$ROOT_DIR/bin/NullPrivate.linux"
+CONFIG_PATH="$ROOT_DIR/bin/NullPrivate.yaml"
+BACKUP_CONFIG_PATH="$ROOT_DIR/bin/NullPrivate.yaml.bak"
 ADGUARD_PID=""
 
 # Test temp directory

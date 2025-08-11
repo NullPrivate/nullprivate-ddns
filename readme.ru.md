@@ -7,16 +7,16 @@
 ## Обзор
 
 AdGuard Private DDNS предназначен для простой и быстрой настройки частного динамического DNS (DDNS) без необходимости покупки домена.  
-Этот скрипт DDNS разработан специально для [nullprivate.com](https://nullprivate.com), используя базовые функции AdGuardPrivate для бесшовной реализации этой возможности.  
+Этот скрипт DDNS разработан специально для [nullprivate.com](https://nullprivate.com), используя базовые функции NullPrivate для бесшовной реализации этой возможности.  
 Если у вас уже развернут AdGuardHome, вы также можете использовать этот скрипт для настройки DDNS в AdGuardHome.
 
 ## Начало работы
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. Убедитесь, что AdGuardPrivate развернут и работает.
+1. Убедитесь, что NullPrivate развернут и работает.
 2. Перейдите в раздел **DNS Rewrite**, скачайте скрипт DDNS.
 3. Запустите скрипт.
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. Убедитесь, что AdGuardHome развернут и работает.
-2. Скачайте скрипт из [релизов](https://github.com/AdGuardPrivate/nullprivate-ddns/releases).
+2. Скачайте скрипт из [релизов](https://github.com/NullPrivate/nullprivate-ddns/releases).
 3. Запустите скрипт.
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Возможности
 
 - Быстрая и простая настройка.
-- Использование AdGuardPrivate для реализации DDNS.
+- Использование NullPrivate для реализации DDNS.
 - Поддержка Windows и Unix-подобных систем.
 - Несколько вариантов аутентификации: cookies (более безопасно, но может истекать) или имя пользователя/пароль (более долговечно, но менее безопасно).
 - **Поддержка AdGuardHome**: полная совместимость с AdGuardHome для бесшовной настройки DDNS.
@@ -76,7 +76,7 @@ chmod +x ddns.sh
 
 ## Руководство по началу работы
 
-1. Убедитесь, что AdGuardPrivate или AdGuardHome установлен и работает.
+1. Убедитесь, что NullPrivate или AdGuardHome установлен и работает.
 2. Следуйте инструкциям в скриптах `win/ddns.ps1` (для Windows) или `unix/ddns.sh` (для Unix-подобных систем), чтобы настроить ваш частный DDNS.
 
 ## Лицензия

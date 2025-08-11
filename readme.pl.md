@@ -7,16 +7,16 @@ Ten projekt został dostarczony przez [@jqknono](https://github.com/jqknono).
 ## Przegląd
 
 AdGuard Prywatny DDNS ma na celu zapewnienie prostego sposobu szybkiej konfiguracji prywatnego dynamicznego DNS (DDNS) bez konieczności zakupu domeny.
-Ten skrypt DDNS został opracowany specjalnie dla [nullprivate.com](https://nullprivate.com), wykorzystując podstawowe funkcje AdGuardPrivate, aby umożliwić płynną realizację tej funkcji.
+Ten skrypt DDNS został opracowany specjalnie dla [nullprivate.com](https://nullprivate.com), wykorzystując podstawowe funkcje NullPrivate, aby umożliwić płynną realizację tej funkcji.
 Jeśli samodzielnie wdrożyłeś AdGuardHome, możesz również użyć tego skryptu do skonfigurowania DDNS dla AdGuardHome.
 
 ## Rozpoczęcie pracy
 
-### AdGuardPrivate
+### NullPrivate
 
-![AdGuardPrivate](./assets/nullprivate.webp)
+![NullPrivate](./assets/nullprivate.webp)
 
-1. Wdrożono i uruchomiono AdGuardPrivate
+1. Wdrożono i uruchomiono NullPrivate
 2. Przejdź do **Przepisywania DNS**, pobierz skrypt DDNS
 3. Uruchom skrypt
 
@@ -39,7 +39,7 @@ chmod +x ddns-script.sh
 ![AdGuardHome](./assets/adguardhome.webp)
 
 1. Wdrożono i uruchomiono AdGuardHome
-2. Pobierz skrypt z [wydania](https://github.com/AdGuardPrivate/nullprivate-ddns/releases)
+2. Pobierz skrypt z [wydania](https://github.com/NullPrivate/nullprivate-ddns/releases)
 3. Uruchom skrypt
 
 **Windows**
@@ -60,7 +60,7 @@ chmod +x ddns.sh
 ## Funkcje
 
 - Szybka i łatwa konfiguracja.
-- Wykorzystanie AdGuardPrivate do realizacji funkcji DDNS.
+- Wykorzystanie NullPrivate do realizacji funkcji DDNS.
 - Obsługa systemów Windows i Unix.
 - Wiele opcji uwierzytelniania: ciasteczka (bezpieczniejsze, ale mogą wygasnąć) lub nazwa użytkownika/hasło (trwalsze, ale mniej bezpieczne).
 - **Obsługa AdGuardHome**: pełna kompatybilność z AdGuardHome, wykorzystująca jego funkcje do płynnej konfiguracji DDNS.
@@ -76,7 +76,7 @@ W przeciwieństwie do tradycyjnego DDNS, ten prywatny DDNS oferuje następujące
 
 ## Przewodnik wprowadzający
 
-1. Upewnij się, że AdGuardPrivate lub AdGuardHome jest zainstalowany i działa.
+1. Upewnij się, że NullPrivate lub AdGuardHome jest zainstalowany i działa.
 2. Postępuj zgodnie z instrukcjami zawartymi w skryptach `win/ddns.ps1` (dla Windows) lub `unix/ddns.sh` (dla systemów Unix), aby skonfigurować swój prywatny DDNS.
 
 ## Licencja
